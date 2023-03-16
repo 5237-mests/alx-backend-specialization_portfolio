@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
+import { useContext } from 'react'
+import {StatesContext} from './StatesContext'
 
-function Login({logged, setLogged, setHeaders, setUserid, setEligble}) {
+function Login() {
+   const {setEligble, setHeaders, setLogged, setUserid} = useContext(StatesContext)
     const [data, setData] = useState({})
-   
     const updateData = (e) =>{
         setData({
             ...data, [e.target.name]:e.target.value
@@ -18,28 +20,26 @@ function Login({logged, setLogged, setHeaders, setUserid, setEligble}) {
         
         if (resp.status == 200)
         {
-            // console.log("logged in success")
-            // console.log(resp)
             setLogged(true)
             setUserid(resp.data.userid)
-            // console.log(resp.data.userid)
-            setHeaders({"Authorization: Token ": resp.data["X-token"]})
-
-            const reponse = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.userid}/`)
-            // console.log("user found", resp.data)
-            if  (reponse.data.user)
-            {
-              // console.log("user found", resp.data)
-              setEligble(false)
-            }
-            else{
-              setEligble(true)
-            }
+            const examTaken = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.userid}/`)
+            const examCand = await axios.get(`http://localhost:8000/api/exam-cand/${resp.data.userid}/`)
+              
+            console.log("examTaken", examTaken)
+            console.log("exam cand", examCand)
+            if (examCand.data.user && ! examTaken.data.user)
+              {
+                setEligble(true)
+              }
+              else
+              {
+                setEligble(false)
+              }
         }
     }
   return (
    <>
-   {!logged &&
+   {
     <Form>
     <Form.Group className="mb-3" controlId="formBasicEmail">
       <Form.Label>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
@@ -51,8 +51,6 @@ function Login({logged, setLogged, setHeaders, setUserid, setEligble}) {
     <Button variant="primary" type="submit" onClick={sendData}>
       Login
     </Button>
-
-    <p>{data.username} - {data.password}</p>
   </Form>}
    </>
   )

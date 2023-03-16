@@ -1,27 +1,21 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Button from 'react-bootstrap/esm/Button'
 import Post from './Post'
+import { StatesContext, StatesProvider } from './StatesContext'
+import PaginatePosts from './PaginatePosts'
+import Login from './Login'
 
-function Body({userid}) {
-    const [qs, setqs] = useState([])
-const loadData = async () => {
-    const resp = await axios.get(`http://localhost:8000/api/exam-cand/${userid}`)
-    console.log(resp.data)
-    if(resp.data.user)
-    {
-        const jobid =resp.data.job
-        const questions = await axios.get(`http://localhost:8000/api/questions/${jobid}`)
-       setqs(questions.data)
-    }
-   
-}
+function Body() {
+      const {logged} = useContext(StatesContext)
   return (
-    <div>
-        
-        <Button onClick={loadData}>Load Questions</Button>
-       <Post/>
-    </div>
+    <>
+      {!logged && 
+      <Login/>}
+      {logged &&
+      <PaginatePosts/>
+      }
+    </>
   )
 }
 

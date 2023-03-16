@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 // import './PostComponent.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios';
+import { StatesContext, StatesProvider } from './StatesContext';
 
-const Post = ({setEligble, totalPosts, posts, loading, userId, job, setStarted}) => {
+const Post = () => {
+  const {setEligble, totalPosts, posts, isloading, userid, job, setStarted} = useContext(StatesContext)
   let [data, setData] = useState({});
   const [exres, setExres] = useState({"finshed":false, "result": 0, "total": 0})
-  console.log(data)
+  console.log("Total Posts", totalPosts)
   const onSubmit = async (e) => {
     e.preventDefault();
     let payload = {}
     payload["userAnswer"] = JSON.stringify(data)
-    payload["user"] = userId;
+    payload["user"] = userid;
     payload["job"] = job;
     // payload["total"] = posts.length
     
@@ -36,7 +38,7 @@ const Post = ({setEligble, totalPosts, posts, loading, userId, job, setStarted})
   // console.log(data);
   // console.log(totalPosts);
 
-  if (loading) {
+  if (isloading) {
     return <h2>Loading...</h2>
   }
   return (
@@ -49,7 +51,7 @@ const Post = ({setEligble, totalPosts, posts, loading, userId, job, setStarted})
      <Form onSubmit={onSubmit}>
      {posts.map((post) => (
        <div>
-         <h4>{ totalPosts.indexOf(post)}. {post.text} </h4>
+         <h4>{ posts.indexOf(post)}. {post.text} </h4>
          <Form.Group className='choice'>
            <Form.Check
              type='radio' 

@@ -12,7 +12,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import axios from 'axios';
 import PaginatePosts from './components/PaginatePosts';
-import { StatesProvider } from './components/StatesContext';
+import StatesProvider from './components/StatesContext';
 import Body from './components/Body';
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
   }
   return (
      <StatesProvider>
+      <Header />
             <Body/>
      </StatesProvider>
   );

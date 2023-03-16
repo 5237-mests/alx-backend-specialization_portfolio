@@ -6,6 +6,7 @@ import axios from 'axios';
 
 
 function NavBar(props) {
+
   const logout = async ()=>{
     const resp = await axios.post("http://localhost:8000/logout/")
     if (resp.status == 200)
@@ -14,9 +15,9 @@ function NavBar(props) {
       props.setStarted(false);
     }
   }
+
   return (
     <>
-      
       <Navbar bg="primary" variant="dark">
         <Container>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>

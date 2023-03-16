@@ -1,11 +1,14 @@
 from django.db import models
+from users.models import Employee
 
 # Create your models here.
 class Job(models.Model):
     """Job list table"""
     name = models.CharField(max_length=255, null=False, blank=False) #Engineer 2
-    jobcode = models.CharField(max_length=255, null=False, blank=False)
-    jobgrade = models.CharField(max_length=20, null=False, blank=False) #D2
+    jobCode = models.CharField(max_length=255, null=False, blank=False)
+    jobGrade = models.CharField(max_length=20, null=False, blank=False) #D2
+    def __str__(self) -> str:
+        return f'{self.name}- {self.jobCode} - {self.jobCode}'
 
 class Question(models.Model):
     """Question table"""
@@ -15,17 +18,24 @@ class Question(models.Model):
     chc = models.CharField(max_length=255, null=False, blank=False)
     chd = models.CharField(max_length=255, null=False, blank=False)
     ans = models.CharField(max_length=255, null=False, blank=False)
-    jobid = models.ForeignKey(Job, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="questions", related_query_name="job")
+    def __str__(self) -> str:
+        return self.text
 
 
-class Employee(models.Model):
-    """List of Employees"""
-    id = models.IntegerField(max_length=10, null=False, unique=True, blank=False)
-    firstname = models.CharField(max_length=255, null=False, blank=False)
-    middlename = models.CharField(max_length=255, null=False, blank=False)
-    lastname = models.CharField(max_length=255, null=False, blank=False)
-    datejoined = models.DateField(null=False, blank=False)
-    curposition = models.CharField(max_length=255, null=False, blank=False)
-    jobid = models.ForeignKey(Job, null=True, on_delete=models.SET_NULL) # jobcode
-    
+class ExamResult(models.Model):
+    user = models.ForeignKey(Employee, on_delete=models.CASCADE, unique=True)
+    examDate = models.DateTimeField(auto_now_add=True)
+    userAnswer = models.TextField()
+    score = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    total = models.IntegerField(default=0)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, unique=True)
+    def __str__(self) -> str:
+        return self.score
 
+class ExamCandidates(models.Model):
+    user = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    examDate = models.DateTimeField()
+    job= models.ForeignKey(Job, on_delete=models.CASCADE)
+    def __str__(self) -> str:
+        return str(self.user.id)

@@ -38,23 +38,25 @@ function Login() {
   }
 
   return (
-   <>
-    {
-      <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
-          </Form.Group>
+   <div className='container mt-5 login justify-content-center'>
+    <div>
+      {
+        <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
-          </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
+            </Form.Group>
 
-          <Button variant="primary" type="submit" onClick={sendData}>
-            Login
-          </Button>
-      </Form>
-    }
-   </>
+            <Button variant="primary" type="submit" onClick={sendData}>
+              Login
+            </Button>
+        </Form>
+      }
+    </div>
+   </div>
   )
 }
 

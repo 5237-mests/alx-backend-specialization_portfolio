@@ -3,8 +3,6 @@ import { useEffect , useState} from 'react'
 import axios from 'axios'
 import Button from 'react-bootstrap/esm/Button'
 
-
-
 function Main({logged, headers}) {
     const [users, setUsers] = useState([])
     const [userId, setUserId] = useState(0)

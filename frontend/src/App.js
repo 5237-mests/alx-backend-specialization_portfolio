@@ -6,6 +6,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import StatesProvider from './components/StatesContext';
 import Body from './components/Body';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import Login from './components/Login';
+import PaginatePosts from './components/PaginatePosts';
+import ExamResult from './components/ExamResult';
 
 function App() {
   const [data, setData] = useState([])
@@ -15,9 +19,22 @@ function App() {
   }
   return (
      <StatesProvider>
-      <Header />
+      
+     <Router>
+     <Header/>
+      <Routes>
+      {/* <Header />
       <Body/>
-      <Footer />
+      <Footer /> */}
+        <Route path='/' element={<Body/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/exam' element={<PaginatePosts/>}/>
+        <Route path='/exam-result' element={<ExamResult/>}/>
+
+      </Routes>
+      <Footer/>
+     </Router>
+     
      </StatesProvider>
   );
 }

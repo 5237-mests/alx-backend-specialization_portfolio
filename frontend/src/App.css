@@ -9,3 +9,16 @@
   background-color: rgb(0, 238, 255);
   height: 50vh;
 }
+.home {
+  background-image: url("./assets/images/abay.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:90vh;
+}
+.mynav{
+  color: white;
+}
+.view-result{
+  min-height: 60vh;
+}

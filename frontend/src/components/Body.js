@@ -2,13 +2,15 @@ import React, { useContext } from 'react'
 import { StatesContext } from './StatesContext'
 import PaginatePosts from './PaginatePosts'
 import Login from './Login'
+import Home from './Home'
 
 function Body() {
       const {logged} = useContext(StatesContext)
   return (
     <>
-      {!logged && <Login/>}
-      {logged && <PaginatePosts/>}
+      <Home/>
+      {/* {!logged && <Login/>}
+      {logged && <PaginatePosts/>} */}
     </>
   )
 }

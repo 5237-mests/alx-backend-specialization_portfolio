@@ -1,5 +1,6 @@
 from rest_framework import generics
 from users.models import Employee
+import random
 import json
 from .serializer import (
     ExamResultSerializer,
@@ -58,15 +59,21 @@ class QuestionListAPIViewByJobID(generics.ListAPIView):
     serializer_class = QuesionSerializer
     def get_queryset(self):
         queryset = Question.objects.filter(job__pk=self.kwargs["pk"])
+        # add to job model q quantity
+        job= Job.objects.get(pk=self.kwargs["pk"])
+        queryset = random.sample(list(queryset),k=job.totalquestions)
         return queryset
     
 class ExamResultListCreateView(generics.ListCreateAPIView):
    queryset = ExamResult.objects.all()
    serializer_class = ExamResultSerializer
    def create(self, request, *args, **kwargs):
-       us = json.loads(request.data.get("userAnswer")) #use ans dict  job:
+       us = json.loads(request.data.get("userAnswer")) #use ans dict  job:{"question_19": "Copper"}
     #    print("The job id is", request.data.get("job"))
-       correctAns = Question.objects.filter(job__pk=request.data.get("job")).all()
+       selected = [key.split("_")[1] for key in us]
+       print(selected)
+       correctAns = Question.objects.filter(job__pk=request.data.get("job")).filter(pk__in=selected)
+       total = Job.objects.get(pk=request.data.get("job")).totalquestions
        ans = {f"question_{q.id}": q.ans  for q in correctAns} # ans dict
     #    print(ans, "The ans")
        score = 0.0
@@ -77,7 +84,7 @@ class ExamResultListCreateView(generics.ListCreateAPIView):
        instance = ExamResult.objects.create(user=Employee.objects.get(pk=request.data.get("user")),
                                             job=Job.objects.get(pk=request.data.get("job")),
                                             userAnswer=request.data.get("userAnswer"),
-                                            score=score, total=len(ans))
+                                            score=score, total=total)
        instance.save()
        serializer = ExamResultSerializer(instance)
        return Response(serializer.data)

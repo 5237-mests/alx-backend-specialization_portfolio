@@ -2,11 +2,14 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='row mt-5 justify-content-center'>
+    <div className='row mt-5 justify-content-center ms-auto'>
       <hr />
-      <div className='col-4 '>hchch</div>
-      <div className='col-4 '>hchch</div>
-      <div className='col-4 '>hchch</div>
+      <div className='col-12 '>hchch</div>
+      <div className='col-12 '>hchch</div>
+      <div className='col-12 '>hchch</div>
+      <div className='col-12 '>hchch</div>
+     
+
     </div>
   )
 }

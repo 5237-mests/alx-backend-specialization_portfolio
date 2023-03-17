@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const StatesContext = createContext()
 
 export default function StatesProvider(props) {
-
+    const [exres, setExres] = useState({"finshed":false, "result": 0, "total": 0})
     const [userid, setUserid] = useState(0);
     const [logged ,setLogged] = useState(false);
     const [started, setStarted] = useState(false);
@@ -19,7 +19,8 @@ export default function StatesProvider(props) {
         isloading, setIsloading, eligble, setEligble,
         posts, setPosts,
         job, setJob, currentPage, setCurrentPage, postsPerPage, setpostsPerPage,
-        started, setStarted, userid, setUserid
+        started, setStarted, userid, setUserid,
+        exres, setExres,setScore,score,
         }
 
     return (

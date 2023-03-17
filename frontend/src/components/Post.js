@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Form } from 'react-bootstrap'
-// import axios from 'axios';
+import axios from 'axios';
 import { StatesContext } from './StatesContext';
 
 const Post = ({currentPosts}) => {
   console.log('cr post at posT',currentPosts);
-  const {setEligble, totalPosts, posts, isloading, userid, job, setStarted} = useContext(StatesContext)
+  const {setEligble, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
 
   let [data, setData] = useState({});
 
-  const [exres, setExres] = useState({"finshed":false, "result": 0, "total": 0})
+  
   console.log("Total Posts", totalPosts)
 
   const onSubmit = async (e) => {
@@ -20,10 +20,11 @@ const Post = ({currentPosts}) => {
     payload["user"] = userid;
     payload["job"] = job;
     
-    // const resp = await axios.post("http://localhost:8000/api/exam-result/", data=payload)
-   
+    const resp = await axios.post("http://localhost:8000/api/exam-result/", data=payload)
+    console.log(resp.data)
     setStarted(false)
     setEligble(false)
+    setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
   }
 
   const onChange = (e) => {

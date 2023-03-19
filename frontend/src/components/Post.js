@@ -33,7 +33,7 @@ const Post = ({currentPosts}) => {
     setStarted(false)
     setEligble(false)
     alert('Exam submitted! You can see your score now.')
-  },2000);
+  },7200*1000);
 
   const onChange = (e) => {
     const { name, value} = e.target;

@@ -5,6 +5,7 @@ import Pagination from './Pagination'
 import { Button } from 'react-bootstrap';
 import { StatesContext } from './StatesContext';
 import { useNavigate } from 'react-router-dom';
+import CountdownTimer from './RemainingTime';
 
 function PaginatePosts() {
   const [loginSuccesss, setLoginSuccesss] = useState(true);
@@ -59,9 +60,9 @@ function PaginatePosts() {
 
   if (logged) {
     setTimeout(()=>{
-      console.log('hello*');
+      // console.log('hello*');
       setLoginSuccesss(false);
-    }, 9000)
+    }, 7200)
   }
 
   return (
@@ -83,6 +84,8 @@ function PaginatePosts() {
       :
       <div className='row justify-content-center mt-5'>
         <h2 className='col-sm-6 col-lg-4'>Exam on Progress!</h2> 
+        <hr/>
+        <CountdownTimer />
         <hr/>
         <Pagination paginatePrev={paginatePrev} paginateNext={paginateNext}/>
         <hr/>

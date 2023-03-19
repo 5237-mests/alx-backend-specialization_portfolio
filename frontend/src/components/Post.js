@@ -24,11 +24,19 @@ const Post = ({currentPosts}) => {
     payload["job"] = job;
     
     const resp = await axios.post("http://localhost:8000/api/exam-result/", data=payload)
-    console.log(resp.data)
+    console.log('submitted exam',resp.data)
     setStarted(false)
     setEligble(false)
     setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
   }
+
+  // if time over it submit the form to db
+  setTimeout(()=>{
+    // onSubmit();
+    setStarted(false)
+    setEligble(false)
+    alert('Exam submitted! You can see your score now.')
+  },7200*1000);
 
   const onChange = (e) => {
     const { name, value} = e.target;
@@ -40,9 +48,10 @@ const Post = ({currentPosts}) => {
   }
   return (
    <>
-    {exres.finshed && 
-    <h3>Your Scored: {exres.result}/{exres.total}</h3>
-    }
+      {exres.finshed && 
+      <h3>Your Scored: {exres.result}/{exres.total}</h3>
+      }
+
       {!exres.finshed &&  
       <Form onSubmit={onSubmit}>
         {currentPosts.map((post) => (
@@ -90,6 +99,7 @@ const Post = ({currentPosts}) => {
         </div>
       </Form>
       }
+
    </>
   )
 }

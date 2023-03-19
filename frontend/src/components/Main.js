@@ -36,4 +36,4 @@ function Main({logged, headers}) {
   )
 }
 
-export default Main
+export default Main;

@@ -20,20 +20,16 @@ function App() {
   return (
      <StatesProvider>
       
-     <Router>
-     <Header/>
-      <Routes>
-      {/* <Header />
-      <Body/>
-      <Footer /> */}
-        <Route path='/' element={<Body/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/exam' element={<PaginatePosts/>}/>
-        <Route path='/exam-result' element={<ExamResult/>}/>
-
-      </Routes>
-      <Footer/>
-     </Router>
+      <Router>
+          <Header/>
+          <Routes>
+            <Route path='/' element={<Body/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/exam' element={<PaginatePosts/>}/>
+            <Route path='/exam-result' element={<ExamResult/>}/>
+          </Routes>
+          <Footer/>
+      </Router>
      
      </StatesProvider>
   );

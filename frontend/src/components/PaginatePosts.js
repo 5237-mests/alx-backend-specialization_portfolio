@@ -24,6 +24,7 @@ function PaginatePosts() {
     eligble} = useContext(StatesContext);
     const [progress, setProgress] = useState(false)
   const fetchPosts = async () => {
+    
     setIsloading(true);
     const resp = await axios.get(`http://localhost:8000/api/exam-cand/${userid}`)
     let joob = resp.data.job

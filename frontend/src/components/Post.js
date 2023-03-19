@@ -14,7 +14,10 @@ const Post = ({currentPosts}) => {
   console.log("Total Posts", totalPosts)
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    if (e)
+    {
+      e.preventDefault();
+    }
     let payload = {}
     payload["userAnswer"] = JSON.stringify(data)
     payload["user"] = userid;

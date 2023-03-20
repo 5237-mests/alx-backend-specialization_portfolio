@@ -5,19 +5,24 @@ import axios from 'axios';
 import { StatesContext } from './StatesContext';
 
 const Post = ({currentPosts}) => {
-  const {setEligble, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
+  const {setEligble,started, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
 
   let [data, setData] = useState({});
   console.log('user anwser!!', data)
-
-  let payload = {
-    'userAnswer': JSON.stringify(data),
-    'user': userid,
-    'job': job,
-  }
-
+  let [submitted, setSubmitted] = useState(false)
+  const dataRef = useRef(data);
+  const submitRef = useRef(submitted)
+  submitRef.current = submitted;
+  dataRef.current = data;
+  let timer = null;
   const handlesubmit = async ()=> {
     try {
+      let payload = {
+        'userAnswer': JSON.stringify(dataRef.current),
+        'user': userid,
+        'job': job,
+      }
+      console.log("payload is", payload)
       const resp = await axios.post("http://localhost:8000/api/exam-result/", payload)
       console.log('submitted exam',resp.data)
       setStarted(false)
@@ -25,27 +30,28 @@ const Post = ({currentPosts}) => {
       setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
 
     } catch(err){
-      console.log('error POST', err.toString())
+      console.log('error POST')
     }
   
   }
   
   const onSubmit = async (e) => {
     e.preventDefault();
+    submitRef.current = submitted;
     await handlesubmit();
+    submitRef.current = submitted;
+    clearTimeout(timer);
   }
-  
-
-
   const onChange = (e) => {
     const { name, value} = e.target;
     setData({...data, [name]: value});
+    dataRef.current = data;
   }
-
-  // // if time over it submit the form to db
-  setTimeout(()=>{
-    handlesubmit();
-  }, 3*9000);
+  useEffect(()=>{
+timer =   setTimeout(()=>{
+        handlesubmit();
+    }, 10000);
+  }, [])
 
   if (isloading) {
     return <h2>Loading...</h2>

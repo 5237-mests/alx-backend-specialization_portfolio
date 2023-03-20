@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import axios from 'axios';
 import {StatesContext} from './StatesContext'
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useNavigate, Redirect,Route  } from 'react-router-dom';
 
@@ -42,7 +43,7 @@ let navigate = useNavigate();
           <Nav className="ms-auto">
             {/* <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link> */}
-            {logged?<Button onClick={logout}>Logout</Button>:<Nav.Link href="/login">Login</Nav.Link>}
+            {logged?<Button  onClick={logout}>Logout</Button>:<Link className='text-light text-decoration-none' to="/login">Login</Link>}
             
           </Nav>
         </Container>

@@ -12,14 +12,13 @@ import PaginatePosts from './components/PaginatePosts';
 import ExamResult from './components/ExamResult';
 
 function App() {
-  const [data, setData] = useState([])
-  const getData = async ()=>{
-    const resp = await axios.get("http://localhost:8000/api/users/")
-    setData(resp.data)
-  }
+  // const [data, setData] = useState([])
+  // const getData = async ()=>{
+  //   const resp = await axios.get("http://localhost:8000/api/users/")
+  //   setData(resp.data)
+  // }
   return (
      <StatesProvider>
-      
       <Router>
           <Header/>
           <Routes>
@@ -30,7 +29,6 @@ function App() {
           </Routes>
           <Footer/>
       </Router>
-     
      </StatesProvider>
   );
 }

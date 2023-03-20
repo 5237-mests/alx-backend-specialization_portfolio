@@ -1,44 +1,51 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios';
 import { StatesContext } from './StatesContext';
 
 const Post = ({currentPosts}) => {
-  console.log('cr post at posT',currentPosts);
   const {setEligble, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
 
   let [data, setData] = useState({});
+  console.log('user anwser!!', data)
 
-  
-  console.log("Total Posts", totalPosts)
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    let payload = {}
-    payload["userAnswer"] = JSON.stringify(data)
-    payload["user"] = userid;
-    payload["job"] = job;
-    
-    const resp = await axios.post("http://localhost:8000/api/exam-result/", data=payload)
-    console.log('submitted exam',resp.data)
-    setStarted(false)
-    setEligble(false)
-    setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
+  let payload = {
+    'userAnswer': JSON.stringify(data),
+    'user': userid,
+    'job': job,
   }
 
-  // if time over it submit the form to db
-  setTimeout(()=>{
-    // onSubmit();
-    setStarted(false)
-    setEligble(false)
-    alert('Exam submitted! You can see your score now.')
-  },7200*1000);
+  const handlesubmit = async ()=> {
+    try {
+      const resp = await axios.post("http://localhost:8000/api/exam-result/", payload)
+      console.log('submitted exam',resp.data)
+      setStarted(false)
+      setEligble(false)
+      setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
+
+    } catch(err){
+      console.log('error POST', err.toString())
+    }
+  
+  }
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await handlesubmit();
+  }
+  
+
 
   const onChange = (e) => {
     const { name, value} = e.target;
     setData({...data, [name]: value});
   }
+
+  // // if time over it submit the form to db
+  setTimeout(()=>{
+    handlesubmit();
+  }, 3*9000);
 
   if (isloading) {
     return <h2>Loading...</h2>

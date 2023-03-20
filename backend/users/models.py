@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from datetime import datetime
 # from questions.models import Job
 
 # Create your models here.
@@ -20,13 +21,13 @@ class MyUserManager(BaseUserManager):
         return self.create_user(username, password, **kwargs)
 
 
-class Employee(AbstractBaseUser, PermissionsMixin):
+class Employee(AbstractUser):
     """List of Employees"""
     username = models.IntegerField(_("Username"),null=False, unique=True, blank=False)
     first_name = models.CharField(max_length=255, null=False, blank=False)
     middlename = models.CharField(max_length=255, null=False, blank=False)
     last_name = models.CharField(max_length=255, null=False, blank=False)
-    date_joined = models.DateField(_("Date joined"),auto_now_add=True)
+    date_joined = models.DateTimeField(_("Date joined"),default=timezone.now)
     curposition = models.CharField(max_length=255, null=False, blank=False)
     # jobid = models.ForeignKey(Job, null=True, on_delete=models.SET_NULL) # jobcode
     email = models.EmailField(unique=True, null=False, blank=False)
@@ -35,7 +36,7 @@ class Employee(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     registered_by = models.ForeignKey("Employee", on_delete=models.SET_DEFAULT, default=4)
-    objects = MyUserManager()
+    # objects = MyUserManager()
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["password", "email"]
 

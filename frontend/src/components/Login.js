@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   let [err, setErr] = useState(false);
@@ -61,8 +61,11 @@ function Login() {
             <Button variant="primary" type="submit" onClick={sendData}>
               Login
             </Button>
+            
         </Form>
+        
       }
+      <p>Don't have an account? <Link to='/register'>SignUp</Link></p>
     </div>
    </div>
   )

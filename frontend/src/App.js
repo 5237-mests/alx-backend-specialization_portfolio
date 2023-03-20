@@ -10,6 +10,8 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Login from './components/Login';
 import PaginatePosts from './components/PaginatePosts';
 import ExamResult from './components/ExamResult';
+import Registration from './components/Registration';
+import ExamRegistration from './components/ExamRegistration';
 
 function App() {
   // const [data, setData] = useState([])
@@ -26,8 +28,11 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/exam' element={<PaginatePosts/>}/>
             <Route path='/exam-result' element={<ExamResult/>}/>
+            <Route path='/register' element={<Registration/>}/>
+            <Route path='/register-exam' element={<ExamRegistration/>}/>
+            
           </Routes>
-          <Footer/>
+          {/* <Footer/> */}
       </Router>
      </StatesProvider>
   );

@@ -20,6 +20,11 @@ from .models import Job, Question, ExamResult, ExamCandidates
 from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
+class ExamRegisterAPIView(generics.GenericAPIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        return Response({"ok": "registed"})
+
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
@@ -28,7 +33,11 @@ class UserListCreateView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         print(request.data, "FROM Reatc")
         serializer = EmployeeSerializer(data=request.data)
-        return super().post(request, *args, **kwargs)
+        if serializer.is_valid():
+            user = serializer.save()
+            user_ser = EmployeeSerializer(user)
+            return Response(user_ser.data)
+        return Response(serializer.errors)
 
 class UserDeleteUpdateViewAPIVIew(generics.RetrieveUpdateDestroyAPIView):
     queryset = Employee.objects.all()

@@ -41,7 +41,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
-        fields = ("name", "jobCode", "jobGrade", "id")
+        fields = ("name", "jobCode", "jobGrade", "id", "totalquestions")
     
 class QuesionSerializer(serializers.ModelSerializer):
     class Meta:

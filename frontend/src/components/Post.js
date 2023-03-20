@@ -8,13 +8,11 @@ const Post = ({currentPosts}) => {
   const {setEligble,started, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
 
   let [data, setData] = useState({});
-  console.log('user anwser!!', data)
-  let [submitted, setSubmitted] = useState(false)
   const dataRef = useRef(data);
-  const submitRef = useRef(submitted)
-  submitRef.current = submitted;
+  const submitRef = useRef(null)
+  submitRef.current = false;
   dataRef.current = data;
-  let timer = null;
+  
   const handlesubmit = async ()=> {
     try {
       let payload = {
@@ -28,19 +26,26 @@ const Post = ({currentPosts}) => {
       setStarted(false)
       setEligble(false)
       setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
-
+      
+      submitRef.current = true
     } catch(err){
       console.log('error POST')
+     
+      submitRef.current = true;
     }
   
   }
   
   const onSubmit = async (e) => {
     e.preventDefault();
-    submitRef.current = submitted;
-    await handlesubmit();
-    submitRef.current = submitted;
-    clearTimeout(timer);
+    try {
+      await handlesubmit();
+      submitRef.current = true;
+    }
+    catch (e) {
+        submitRef.current = true;
+    }
+   
   }
   const onChange = (e) => {
     const { name, value} = e.target;
@@ -48,8 +53,14 @@ const Post = ({currentPosts}) => {
     dataRef.current = data;
   }
   useEffect(()=>{
-timer =   setTimeout(()=>{
-        handlesubmit();
+setTimeout(()=>{
+        if (submitRef.current)
+        {
+          console.log("Already submitted")
+        }
+        else {
+          handlesubmit();
+        }
     }, 10000);
   }, [])
 

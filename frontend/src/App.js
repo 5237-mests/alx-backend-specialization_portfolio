@@ -32,7 +32,7 @@ function App() {
             <Route path='/register-exam' element={<ExamRegistration/>}/>
             
           </Routes>
-          {/* <Footer/> */}
+          <Footer/>
       </Router>
      </StatesProvider>
   );

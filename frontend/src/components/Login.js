@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, Fragment } from 'react';
+import {Helmet} from 'react-helmet';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
 import { useNavigate, Link } from 'react-router-dom';
+import '../CSS/Login.css';
 
 function Login() {
   let [err, setErr] = useState(false);
@@ -45,29 +47,41 @@ function Login() {
   }
 
   return (
-   <div className='container login mt-5 bg-secondary justify-space-around view-result'>
-    <div className=' pt-5 ms-auto me-auto'>
-      {
-        <Form>
-            {err && <span className='text-danger'>you missed username or password</span>}
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
-            </Form.Group>
+   <Fragment>
+      <Helmet><title>Login Page</title></Helmet>
+      <div className='log'>
+        <div className=' py-5 ms-auto me-auto'>
+          {
+            <Form className='formlog'>
+                {err && <span className='text-danger'>you missed username or password</span>}
+                <div className='container'>
+                    <div className='row'>
+                      <Form.Group className="mb-3 " controlId="formBasicEmail">
+                        <Form.Label className='row'>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
+                      </Form.Group>
+                    </div>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
-            </Form.Group>
+                    <div className='row'>
+                      <Form.Group className="mb-3 " controlId="formBasicPassword">
+                        <Form.Label className='row'>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
+                      </Form.Group>
+                    </div>
 
-            <Button variant="primary" type="submit" onClick={sendData}>
-              Login
-            </Button>
+                    <div className='row pb-3'>
+                      <Button variant="primary" type="submit" onClick={sendData}>
+                        Login
+                      </Button>
+                    </div>
+                    
+                    <p className='text-light'>Don't have an account? <Link to='/register'>SignUp</Link></p>
+                </div>
+
+            </Form>
             
-        </Form>
-        
-      }
-      <p>Don't have an account? <Link to='/register'>SignUp</Link></p>
-    </div>
-   </div>
+          }
+        </div>
+      </div>
+  </Fragment>
   )
 }
 

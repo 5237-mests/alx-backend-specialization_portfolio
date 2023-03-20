@@ -6,7 +6,7 @@ import {StatesContext} from './StatesContext'
 function Header() {
   let {setLogged, setStarted} = useContext(StatesContext);
   return (
-    <div className=''>
+    <div className='position-relative'>
           <NavBar setLogged={setLogged} setStarted={setStarted}/>
     </div>
   )

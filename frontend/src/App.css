@@ -2,6 +2,11 @@
 
 *{font-family: 'Quicksand', sans-serif;}
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+
 .App {
   text-align: center;
 }
@@ -19,7 +24,7 @@ img{
   background-image: url("./assets/images/abay.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size:auto;
+  background-size: cover;
   width: 100vw;
   height:100vh;
 }
@@ -28,4 +33,13 @@ img{
 }
 .view-result{
   min-height: 60vh;
+}
+
+.bcg{
+  background-image: url("./assets/images/g3.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height:100vh;
 }

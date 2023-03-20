@@ -67,7 +67,7 @@ function PaginatePosts() {
   }
 
   return (
-    <div className='container'>
+    <div className='container-fluid '>
       {!eligble?
       <div className='row'>
          {logged && loginSuccesss && <h5 className='text-success border border-light bg-light py-3 text-center'>You Logged in successfully!</h5>}
@@ -76,9 +76,10 @@ function PaginatePosts() {
         </div>
       </div>
       :eligble && !progress?
-      <div className='row justify-content-center'>
-        {logged && loginSuccesss && <h5 className='text-success border border-light bg-light py-3 text-center'>You Logged in successfully!</h5>}
-        <div className=' mt-5 text-centerview-result'>
+      <div className='row justify-content-center bcg'>
+       
+        <div className=' mt-1 text-centerview-result'>
+          {logged && loginSuccesss && <h5 className='text-success border border-light bg-light py-3 text-center'>You Logged in successfully!</h5>}
           <Button className='col-6 col-md-2 col-lg-2' onClick={fetchPosts}>Start Exam</Button>
         </div>
       </div>

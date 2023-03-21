@@ -19,18 +19,39 @@ from users.models import Employee
 from .models import Job, Question, ExamResult, ExamCandidates
 # from knox.models import AuthToken
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.authentication import SessionAuthentication, BaseAuthentication, TokenAuthentication
 # Create your views here.
 
+class TestAuthView(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        return Response({"status": "Authenticated"})
+
 class ExamRegisterAPIView(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         print(request.data)
         return Response({"ok": "registed"})
-
-class UserListCreateView(generics.ListCreateAPIView):
+class UserGetByUserNameAPIVIew(generics.RetrieveAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    #permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        try:
+            queryset = Employee.objects.filter(username=kwargs.get("username")).first()
+            serializer = EmployeeSerializer(queryset)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({"status": "No User Found"}, status=status.HTTP_404_NOT_FOUND)
+class UserListCreateView(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    
    
     def post(self, request):
         print(request.data, "FROM Reatc")
@@ -45,24 +66,34 @@ class UserListCreateView(generics.ListCreateAPIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class UserDeleteUpdateViewAPIVIew(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
 
 
 
 class JobListCreateAPIView(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 class JobUpdateDeleteGetAPIVIew(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 
 
 class QuestionListCreateAPIView(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Question.objects.all()
     serializer_class = QuesionSerializer
 
 class QuestionListAPIViewByJobCode(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = QuesionSerializer
     def get_queryset(self):
         queryset = Question.objects.filter(job__jobCode =self.kwargs["jobCode"])
@@ -71,6 +102,8 @@ class QuestionListAPIViewByJobCode(generics.ListAPIView):
 
 class QuestionListAPIViewByJobID(generics.ListAPIView):
     serializer_class = QuesionSerializer
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Question.objects.filter(job__pk=self.kwargs["pk"])
         # add to job model q quantity
@@ -79,6 +112,8 @@ class QuestionListAPIViewByJobID(generics.ListAPIView):
         return queryset
     
 class ExamResultListCreateView(generics.ListCreateAPIView):
+   authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+   permission_classes = [IsAuthenticated]
    queryset = ExamResult.objects.all()
    serializer_class = ExamResultSerializer
    #permission_classes = [IsAuthenticated,]
@@ -105,6 +140,8 @@ class ExamResultListCreateView(generics.ListCreateAPIView):
        return Response(serializer.data)
 
 class ExamResultDeleteUpdateGetAPIView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = ExamResult.objects.all()
     serializer_class = ExamResultSerializer
     def get(self, request, *args, **kwargs):
@@ -117,6 +154,8 @@ class ExamResultDeleteUpdateGetAPIView(generics.RetrieveUpdateDestroyAPIView):
         return Response({})
     
 class ExamResultDeleteUpdateGetByJob(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = ExamResult.objects.all()
     serializer_class = ExamResultSerializer(many=True)
     def get(self, request, *args, **kwargs):
@@ -125,6 +164,8 @@ class ExamResultDeleteUpdateGetByJob(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
    
 class ExamCandiateListCreateView(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset =  ExamCandidates.objects.all()
     serializer_class = ExamCandidateSerializer
     # def get_queryset(self):
@@ -132,6 +173,8 @@ class ExamCandiateListCreateView(generics.ListCreateAPIView):
     #     return queryset
 
 class ExamCandDeleteUpdateGetAPIView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication,SessionAuthentication, BaseAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = ExamCandidates.objects.all()
     serializer_class = ExamCandidateSerializer
     def get(self, request, *args, **kwargs):

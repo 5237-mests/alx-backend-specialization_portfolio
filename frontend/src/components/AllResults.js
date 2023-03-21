@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import axios from 'axios'
 import Select from 'react-select'
-
+import { StatesContext } from './StatesContext'
+import { useContext } from 'react'
 // const options = [
 //     { value: 'chocolate', label: 'Chocolate' },
 //     { value: 'strawberry', label: 'Strawberry' },
@@ -14,10 +15,13 @@ import Select from 'react-select'
 //   )
 
 function AllResults() {
+  const {token} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
+    axios.defaults.headers.common["Authorization"] = `Token ${token}`;
     useEffect(()=>{
       (async ()=>{
+        
         const resp2 = await axios.get("http://localhost:8000/api/jobs/")
         const res = []
         console.log(resp2.data, "resp2")

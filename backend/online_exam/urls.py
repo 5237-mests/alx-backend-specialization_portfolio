@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from users.views import login_view, logout_view
 from rest_framework_simplejwt import views as jwt_views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
 
+    path("api/token/", obtain_auth_token), #Post username password  -> token 
     path('admin/', admin.site.urls),
     path("", include('questions.urls')),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),

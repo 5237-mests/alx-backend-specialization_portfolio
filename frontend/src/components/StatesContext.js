@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 export const StatesContext = createContext()
 
 export default function StatesProvider(props) {
+    const [token, setToken] = useState("")
     const [exres, setExres] = useState({"finshed":false, "result": 0, "total": 0})
     const [userid, setUserid] = useState(0);
     const [logged ,setLogged] = useState(false);
@@ -20,7 +21,7 @@ export default function StatesProvider(props) {
         posts, setPosts,
         job, setJob, currentPage, setCurrentPage, postsPerPage, setpostsPerPage,
         started, setStarted, userid, setUserid,
-        exres, setExres,setScore,score,
+        exres, setExres,setScore,score,token, setToken
         }
 
     return (

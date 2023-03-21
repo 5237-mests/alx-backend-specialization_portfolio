@@ -2,7 +2,10 @@ from django.urls import path
 from. import views
 app_name = "questions"
 urlpatterns = [
+
+    path("api/users/<int:username>/", views.UserGetByUserNameAPIVIew.as_view()),
      # User CRUD
+     path("api/autho/", views.TestAuthView.as_view()),
     path("api/users/", views.UserListCreateView.as_view(), name="create-list"),
     path("api/users/<int:pk>/", views.UserDeleteUpdateViewAPIVIew.as_view(), name="del-up-get"),
     # Job CRUD

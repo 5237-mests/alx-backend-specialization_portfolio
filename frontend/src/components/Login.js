@@ -15,7 +15,7 @@ function Login() {
     formState: { errors },
   } = useForm();
   let [err, setErr] = useState(false);
-  const {setEligble, setLogged, setUserid} = useContext(StatesContext)
+  const {setEligble, setLogged, setUserid, setToken} = useContext(StatesContext)
   const [data, setData] = useState({})
   let navigate = useNavigate()
   const updateData = (e) =>{
@@ -26,13 +26,22 @@ function Login() {
   const sendData = async ()=>{
       
       try {
-        const resp = await axios.post("http://localhost:8000/login/", data)
-        if (resp.status === 200)
+       
+        axios.defaults.headers.common["Authorization"] = ``;
+        const auth = await axios.post("http://127.0.0.1:8000/api/token/", data) //free to get token
+        console.log(auth.data.token)
+        if (auth.status === 200)
         {
+            setToken(auth.data.token)
+            axios.defaults.headers.common["Authorization"] = `Token ${auth.data.token}`;
+            console.log(data.username, "user name")
+            const resp = await axios.get(`http://127.0.0.1:8000/api/users/${data.username}/`)
+            console.log(resp, "is user")
             setLogged(true)
-            setUserid(resp.data.userid)
-            const examTaken = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.userid}/`)
-            const examCand = await axios.get(`http://localhost:8000/api/exam-cand/${resp.data.userid}/`)
+            setUserid(resp.data.id)
+            console.log(resp.data.id, "the userid")
+            const examTaken = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.id}/`)
+            const examCand = await axios.get(`http://localhost:8000/api/exam-cand/${resp.data.id}/`)
               
             console.log("examTaken", examTaken)
             console.log("exam cand", examCand)

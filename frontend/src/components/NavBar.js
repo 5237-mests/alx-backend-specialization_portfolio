@@ -26,13 +26,11 @@ function NavBar(props) {
 const {logged} = useContext(StatesContext)
 let navigate = useNavigate();
   const logout = async ()=>{
-    const resp = await axios.post("http://localhost:8000/logout/")
-    if (resp.status == 200)
-    {
+    axios.defaults.headers.common["Authorization"] = ``;
       props.setLogged(false);
       props.setStarted(false);
       navigate('/');
-    }
+   
   }
 
   return (
@@ -41,8 +39,10 @@ let navigate = useNavigate();
         <Container>
           <Navbar.Brand to="#home">EEP Exam</Navbar.Brand>
           <Nav className="ms-auto">
-            {/* <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link> */}
+           {logged ? <div>
+            {/* <Link to="/exam">Home</Link> */}
+            <Link className='text-dark' to="/result-all">View Results</Link>
+           </div>:<div></div>}
             {logged?<Button  onClick={logout}>Logout</Button>:<Link className='text-light text-decoration-none' to="/login">Login</Link>}
             
           </Nav>

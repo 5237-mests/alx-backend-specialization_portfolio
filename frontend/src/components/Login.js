@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext } from 'react';
 import {Helmet} from 'react-helmet';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
@@ -6,8 +6,14 @@ import axios from 'axios'
 import {StatesContext} from './StatesContext'
 import { useNavigate, Link } from 'react-router-dom';
 import '../CSS/Login.css';
+import { useForm } from 'react-hook-form';
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   let [err, setErr] = useState(false);
   const {setEligble, setLogged, setUserid} = useContext(StatesContext)
   const [data, setData] = useState({})
@@ -17,8 +23,8 @@ function Login() {
           ...data, [e.target.name]:e.target.value
       })
   }
-  const sendData = async (e)=>{
-      e.preventDefault()
+  const sendData = async ()=>{
+      
       try {
         const resp = await axios.post("http://localhost:8000/login/", data)
         if (resp.status === 200)
@@ -47,23 +53,25 @@ function Login() {
   }
 
   return (
-   <Fragment>
+   <div>
       <Helmet><title>Login Page</title></Helmet>
       <div className='log'>
         <div className=' py-5 ms-auto me-auto'>
           {
-            <Form className='formlog'>
-                {err && <span className='text-danger'>you missed username or password</span>}
+            <Form className='formlog' onSubmit={handleSubmit(sendData)}>
+                {err && <span className='text-danger'>UserName and or Password is Incorrect</span>}
                 <div className='container'>
                     <div className='row'>
                       <Form.Group className="mb-3 " controlId="formBasicEmail">
-                        <Form.Label className='row'>UserName: <Form.Control name="username" type="number" placeholder="User ID" onChange={updateData} /> </Form.Label>  
+                        <Form.Label className='row'>UserName: <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
+      {errors.username && <p className='text-danger'>username is invalid.</p>} </Form.Label>  
                       </Form.Group>
                     </div>
 
                     <div className='row'>
                       <Form.Group className="mb-3 " controlId="formBasicPassword">
-                        <Form.Label className='row'>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
+                        <Form.Label className='row'>Password: <Form.Control  type="password" {...register('password', { required: true })} onChange={updateData}/>
+      {errors.password && <p className='text-danger'>Password is required.</p>}</Form.Label>
                       </Form.Group>
                     </div>
 
@@ -81,7 +89,7 @@ function Login() {
           }
         </div>
       </div>
-  </Fragment>
+  </div>
   )
 }
 

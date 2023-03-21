@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios';
 import { StatesContext } from './StatesContext';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({currentPosts}) => {
   const {setEligble,started, totalPosts, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
-
+  const nav = useNavigate()
   let [data, setData] = useState({});
   const dataRef = useRef(data);
   const submitRef = useRef(null)
@@ -28,9 +29,10 @@ const Post = ({currentPosts}) => {
       setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
       
       submitRef.current = true
+      nav("/exam-result")
     } catch(err){
       console.log('error POST')
-     
+      // nav("/exam")
       submitRef.current = true;
     }
   
@@ -53,13 +55,13 @@ const Post = ({currentPosts}) => {
     dataRef.current = data;
   }
   useEffect(()=>{
-setTimeout(()=>{
+setTimeout(async()=>{
         if (submitRef.current)
         {
           console.log("Already submitted")
         }
         else {
-          handlesubmit();
+         await handlesubmit();
         }
     }, 10000);
   }, [])

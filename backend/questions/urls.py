@@ -15,7 +15,7 @@ urlpatterns = [
     
     path("api/exam-result/", views.ExamResultListCreateView.as_view(), name="exam-result"),
     path("api/exam-result/<int:pk>/", views.ExamResultDeleteUpdateGetAPIView.as_view(), name="exam-detail"),
-
+    path("api/exam-result-by-jobid/<int:pk>/", views.ExamResultDeleteUpdateGetByJob.as_view()),
     path("api/exam-register/", views.ExamRegisterAPIView.as_view(), name="exam-register"),
     # Exam Candidates
     path("api/exam-cand/", views.ExamCandiateListCreateView.as_view(), name="exam-cand-list"),

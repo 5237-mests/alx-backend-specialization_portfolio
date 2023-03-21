@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import axios from 'axios';
 import {StatesContext} from './StatesContext'
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useNavigate, Redirect,Route  } from 'react-router-dom';
@@ -36,7 +36,7 @@ let navigate = useNavigate();
   }
 
   return (
-    <Fragment className='position-fixed top-50'>
+    <div>
       <Navbar bg="primary" variant="dark">
         <Container>
           <Navbar.Brand to="#home">EEP Exam</Navbar.Brand>
@@ -48,7 +48,7 @@ let navigate = useNavigate();
           </Nav>
         </Container>
       </Navbar>
-    </Fragment>
+    </div>
   );
 }
 

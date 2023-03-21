@@ -35,7 +35,7 @@ class Employee(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    registered_by = models.ForeignKey("Employee", on_delete=models.SET_DEFAULT, default=4)
+    registered_by = models.ForeignKey("Employee", on_delete=models.SET_NULL, null=True)
     # objects = MyUserManager()
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["password", "email"]

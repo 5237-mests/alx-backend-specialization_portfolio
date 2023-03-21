@@ -14,10 +14,12 @@ from .serializer import (
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import status
 from users.models import Employee
 from .models import Job, Question, ExamResult, ExamCandidates
 # from knox.models import AuthToken
 from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 
 class ExamRegisterAPIView(generics.GenericAPIView):
@@ -30,14 +32,17 @@ class UserListCreateView(generics.ListCreateAPIView):
     serializer_class = EmployeeSerializer
     #permission_classes = [IsAuthenticated]
    
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         print(request.data, "FROM Reatc")
-        serializer = EmployeeSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            password = request.data.get("password")
+            user = Employee.objects.create(**request.data)
+            user.set_password(password)
+            user.save()
             user_ser = EmployeeSerializer(user)
-            return Response(user_ser.data)
-        return Response(serializer.errors)
+            return Response(user_ser.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class UserDeleteUpdateViewAPIVIew(generics.RetrieveUpdateDestroyAPIView):
     queryset = Employee.objects.all()
@@ -76,6 +81,7 @@ class QuestionListAPIViewByJobID(generics.ListAPIView):
 class ExamResultListCreateView(generics.ListCreateAPIView):
    queryset = ExamResult.objects.all()
    serializer_class = ExamResultSerializer
+   #permission_classes = [IsAuthenticated,]
    def create(self, request, *args, **kwargs):
        us = json.loads(request.data.get("userAnswer")) #use ans dict  job:{"question_19": "Copper"}
     #    print("The job id is", request.data.get("job"))
@@ -110,7 +116,14 @@ class ExamResultDeleteUpdateGetAPIView(generics.RetrieveUpdateDestroyAPIView):
         queryset.delete()
         return Response({})
     
-
+class ExamResultDeleteUpdateGetByJob(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ExamResult.objects.all()
+    serializer_class = ExamResultSerializer(many=True)
+    def get(self, request, *args, **kwargs):
+        queryset = ExamResult.objects.filter(job__pk=self.kwargs["pk"])
+        serializer = ExamResultSerializer(queryset, many=True)
+        return Response(serializer.data)
+   
 class ExamCandiateListCreateView(generics.ListCreateAPIView):
     queryset =  ExamCandidates.objects.all()
     serializer_class = ExamCandidateSerializer

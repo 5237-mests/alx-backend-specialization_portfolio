@@ -17,7 +17,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ('id', 'username', 'is_active', 'is_staff', 'is_superuser', 'first_name', 'last_name', 'middlename', 'date_joined', 'curposition', 'email', 'password', "registered_by")
-        # extra_kwargs = {"password" : {"write_only": True}}
+        #extra_kwargs = {"password" : {"write_only": True}}
     def create(self, validated_data):
         
         user = Employee.objects.create(username=validated_data["username"],email = validated_data["email"])
@@ -49,6 +49,8 @@ class QuesionSerializer(serializers.ModelSerializer):
         fields = ('text', "cha", "chb", "chc", "chd", "job", "id")
 
 class ExamResultSerializer(serializers.ModelSerializer):
+    user = EmployeeSerializer()
+    job = JobSerializer()
     class Meta:
         model = ExamResult
         fields = ('user', 'examDate', 'userAnswer', 'score', 'job', "total", "id")

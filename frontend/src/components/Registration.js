@@ -24,10 +24,10 @@ function Registration() {
         if (resp.status === 200)
         {
             console.log(resp.data)
-            navigate("/login")
+            // navigate("/login")
         } 
       } catch(error) {
-        setErr(error)
+        setErr(true)
       }
   }
 
@@ -37,7 +37,7 @@ function Registration() {
    <div className='reg'>
     <div className='py-5 ms-auto me-auto'>
       {
-        <Form className='forme'>
+        <Form className='forme' onSubmit={sendData}>
             {err && <span className='text-danger'>UserName Already taken or check your Email</span>}
             <div className='container'>
               <div className='row'>
@@ -75,7 +75,7 @@ function Registration() {
                   <Form.Label>Password: <Form.Control name="password" type="password" placeholder="Password" onChange={updateData} /></Form.Label>
                 </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={sendData}>
+                <Button variant="primary" type="submit">
                   Signup
                 </Button>
               </div>

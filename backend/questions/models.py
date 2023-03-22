@@ -25,17 +25,17 @@ class Question(models.Model):
 
 
 class ExamResult(models.Model):
-    user = models.OneToOneField(Employee, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     examDate = models.DateTimeField(auto_now_add=True)
     userAnswer = models.TextField()
     score = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     total = models.IntegerField(default=0)
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, unique=True)
+    job = models.ForeignKey(Job, on_delete=models.SET_NULL, null=True)
     def __str__(self) -> str:
-        return self.score
+        return str(self.score)
 
 class ExamCandidates(models.Model):
-    user = models.OneToOneField(Employee, on_delete=models.CASCADE)
+    user = models.ForeignKey(Employee, on_delete=models.CASCADE)
     examDate = models.DateTimeField()
     job= models.ForeignKey(Job, on_delete=models.CASCADE)
     def __str__(self) -> str:

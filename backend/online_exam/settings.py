@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     # 'knox',
     'corsheaders',
-    'rest_framework_simplejwt.token_blacklist'
+    #'django.contrib.sessions',
+    # 'rest_framework_simplejwt.token_blacklist'
 ]
 
 
@@ -133,9 +134,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'knox.auth.TokenAuthentication',
     ],
     "DEFAULT_PERMISSION_CLASSES":[

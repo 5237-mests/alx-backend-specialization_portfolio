@@ -55,6 +55,7 @@ function PaginatePosts() {
   }
   const viewResult = async ()=>{
     const examresult = await axios.get(`http://localhost:8000/api/exam-result/${userid}/`)
+    console.log("exam result", examresult)
     setScore({"score":examresult.data.score, "total": examresult.data.total})
     navigate("/exam-result")
   }

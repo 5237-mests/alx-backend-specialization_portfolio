@@ -2,7 +2,10 @@ from django.urls import path
 from. import views
 app_name = "questions"
 urlpatterns = [
+
+    path("api/users/<int:username>/", views.UserGetByUserNameAPIVIew.as_view()),
      # User CRUD
+     path("api/autho/", views.TestAuthView.as_view()),
     path("api/users/", views.UserListCreateView.as_view(), name="create-list"),
     path("api/users/<int:pk>/", views.UserDeleteUpdateViewAPIVIew.as_view(), name="del-up-get"),
     # Job CRUD
@@ -15,7 +18,7 @@ urlpatterns = [
     
     path("api/exam-result/", views.ExamResultListCreateView.as_view(), name="exam-result"),
     path("api/exam-result/<int:pk>/", views.ExamResultDeleteUpdateGetAPIView.as_view(), name="exam-detail"),
-
+    path("api/exam-result-by-jobid/<int:pk>/", views.ExamResultDeleteUpdateGetByJob.as_view()),
     path("api/exam-register/", views.ExamRegisterAPIView.as_view(), name="exam-register"),
     # Exam Candidates
     path("api/exam-cand/", views.ExamCandiateListCreateView.as_view(), name="exam-cand-list"),

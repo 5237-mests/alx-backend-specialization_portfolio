@@ -12,6 +12,7 @@ import PaginatePosts from './components/PaginatePosts';
 import ExamResult from './components/ExamResult';
 import Registration from './components/Registration';
 import ExamRegistration from './components/ExamRegistration';
+import AllResults from './components/AllResults';
 
 function App() {
   // const [data, setData] = useState([])
@@ -30,6 +31,8 @@ function App() {
             <Route path='/exam-result' element={<ExamResult/>}/>
             <Route path='/register' element={<Registration/>}/>
             <Route path='/register-exam' element={<ExamRegistration/>}/>
+            <Route path='/result-all' element={<AllResults/>}/>
+
             
           </Routes>
           <Footer/>

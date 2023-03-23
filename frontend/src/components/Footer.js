@@ -7,7 +7,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 
 function Footer() {
   return (
-    <div className='container-fluid bg-dark text-light'>
+    <div className='container-fluid bg-dark text-light text-decoration-none'>
       <div className='row mt-1 justify-content-center ms-auto'>
         <hr />
         <div className='col-lg-3 col-md-4 col-sm-12 '>
@@ -33,10 +33,10 @@ function Footer() {
         <h5> Social feed </h5>
         <p>Adipisicing fugiat consequat tempor elit aute qui adipisicing culpa.</p>
         <div>
-            <Link className='p-3 text-light' to={'#'}> <YouTubeIcon/> </Link>
-            <Link className='p-3 text-light' to={'#'}> <FacebookSharpIcon/> </Link>
-            <Link className='p-3 text-light' to={'#'}> <LinkedInIcon/> </Link>
-            <Link className='p-3 text-light' to={'#'}> <TelegramIcon/> </Link>
+            <Link className='p-3 text-light text-decoration-none' to={'#'}> <YouTubeIcon/> </Link>
+            <Link className='p-3 text-light text-decoration-none' to={'#'}> <FacebookSharpIcon/> </Link>
+            <Link className='p-3 text-light text-decoration-none' to={'#'}> <LinkedInIcon/> </Link>
+            <Link className='p-3 text-light text-decoration-none' to={'#'}> <TelegramIcon/> </Link>
         </div>
       </div>
   </div>

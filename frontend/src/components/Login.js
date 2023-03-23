@@ -5,47 +5,53 @@ import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
 import { useNavigate, Link } from 'react-router-dom';
-import '../CSS/Login.css';
 import { useForm } from 'react-hook-form';
+import '../CSS/Login.css';
+
 
 function Login() {
+  const {setEligble, setLogged, setUserid, setToken} = useContext(StatesContext)
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  let [err, setErr] = useState(false);
-  const {setEligble, setLogged, setUserid, setToken} = useContext(StatesContext)
+
   const [data, setData] = useState({})
+  let [err, setErr] = useState(false);
   let navigate = useNavigate()
+
+  // function which collect or update data from user
   const updateData = (e) =>{
       setData({
           ...data, [e.target.name]:e.target.value
       })
   }
+
+  // function which checks user is eligble for exam?
   const sendData = async ()=>{
       
       try {
        
         axios.defaults.headers.common["Authorization"] = ``;
         const auth = await axios.post("http://127.0.0.1:8000/api/token/", data) //free to get token
-        console.log(auth.data.token)
+        // console.log(auth.data.token)
         if (auth.status === 200)
         {
             setToken(auth.data.token)
             axios.defaults.headers.common["Authorization"] = `Token ${auth.data.token}`;
-            console.log(data.username, "user name")
+            // console.log(data.username, "user name")
             const resp = await axios.get(`http://127.0.0.1:8000/api/users/${data.username}/`)
-            console.log(resp, "is user")
+            // console.log(resp, "is user")
             setLogged(true)
             setUserid(resp.data.id)
-            console.log(resp.data.id, "the userid")
+            // console.log(resp.data.id, "the userid")
             const examTaken = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.id}/`)
             const examCand = await axios.get(`http://localhost:8000/api/exam-cand/${resp.data.id}/`)
-              
-            console.log("examTaken", examTaken)
-            console.log("exam cand", examCand)
-            if (examCand.data.user && ! examTaken.data.user)
+            // console.log("examTaken", examTaken)
+            // console.log("exam cand", examCand)
+            if (examCand.data.user && !examTaken.data.user)
               {
                 setEligble(true)
                 navigate("/exam")
@@ -57,7 +63,7 @@ function Login() {
               }
         } 
       } catch(error) {
-        setErr(error)
+        setErr(true)
       }
   }
 
@@ -72,15 +78,19 @@ function Login() {
                 <div className='container'>
                     <div className='row'>
                       <Form.Group className="mb-3 " controlId="formBasicEmail">
-                        <Form.Label className='row'>UserName: <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
-      {errors.username && <p className='text-danger'>username is invalid.</p>} </Form.Label>  
+                        <Form.Label className='row'>UserName: 
+                          <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
+                          {/* {errors.username && <p className='text-danger'>username is required.</p>}  */}
+                        </Form.Label>  
                       </Form.Group>
                     </div>
 
                     <div className='row'>
                       <Form.Group className="mb-3 " controlId="formBasicPassword">
-                        <Form.Label className='row'>Password: <Form.Control  type="password" {...register('password', { required: true })} onChange={updateData}/>
-      {errors.password && <p className='text-danger'>Password is required.</p>}</Form.Label>
+                        <Form.Label className='row'>Password: 
+                          <Form.Control  type="password" {...register('password', { required: true })} onChange={updateData}/>
+                          {/* {errors.password && <p className='text-danger'>Password is required.</p>} */}
+                        </Form.Label>
                       </Form.Group>
                     </div>
 
@@ -90,11 +100,10 @@ function Login() {
                       </Button>
                     </div>
                     
-                    <p className='text-light'>Don't have an account? <Link to='/register'>SignUp</Link></p>
+                    <p className='text-light'> Don't have an account? <Link to='/register'>SignUp</Link></p>
                 </div>
 
             </Form>
-            
           }
         </div>
       </div>

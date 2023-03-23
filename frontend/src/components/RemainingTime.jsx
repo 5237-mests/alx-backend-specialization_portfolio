@@ -5,9 +5,9 @@ function CountdownTimer() {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(20);
-let style = {
-  'color': timeOver? 'red': 'green',
-};
+  let style = {
+    'color': timeOver? 'red': 'green',
+  };
 
   useEffect(() => {
     const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;

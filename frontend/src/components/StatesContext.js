@@ -30,4 +30,3 @@ export default function StatesProvider(props) {
        </StatesContext.Provider>
     )
 }
-

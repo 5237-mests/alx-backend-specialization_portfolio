@@ -1,54 +1,45 @@
-import Container from 'react-bootstrap/Container';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import axios from 'axios';
 import Button from 'react-bootstrap/esm/Button';
+import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import axios from 'axios';
-import {StatesContext} from './StatesContext'
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-
-import { useNavigate, Redirect,Route  } from 'react-router-dom';
+import { StatesContext } from './StatesContext'
 
 
-// export function GoHome() {
-//   let navigate = useNavigate();
-//   const handleClick = e => {
-//     e.preventDefault();
-    
-//   }
-//   return <button onClick={handleClick}>Go to Home</button>
-// }
-
-
-
-
-function NavBar(props) {
-const {logged} = useContext(StatesContext)
-let navigate = useNavigate();
+function NavBar() {
+  const {logged, setLogged, setStarted} = useContext(StatesContext)
+  let navigate = useNavigate();
   const logout = async ()=>{
     axios.defaults.headers.common["Authorization"] = ``;
-      props.setLogged(false);
-      props.setStarted(false);
+      setLogged(false);
+      setStarted(false);
       navigate('/');
-   
   }
 
   return (
-    <div>
-      <Navbar bg="primary" variant="dark">
-        <Container>
-          <Navbar.Brand to="#home">EEP Exam</Navbar.Brand>
+    <Navbar bg="primary" expand="lg" variant='dark'>
+      <Container>
+        <Navbar.Brand href="#home">EEP Exam</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
            {logged ? <div>
-            {/* <Link to="/exam">Home</Link> */}
-            <Link className='text-dark' to="/result-all">View Results</Link>
-           </div>:<div></div>}
-            {logged?<Button  onClick={logout}>Logout</Button>:<Link className='text-light text-decoration-none' to="/login">Login</Link>}
-            
+                <Link className='text-light text-decoration-none' to="/result-all">
+                 View Results
+                </Link>
+              </div> : <div></div>
+             }
           </Nav>
-        </Container>
-      </Navbar>
-    </div>
+          <Nav>
+            {logged ? <Nav.Link> <Button  onClick={logout}>Logout</Button> </Nav.Link> : 
+                  <Link className='text-light text-decoration-none' to="/login">Login</Link>
+            }
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

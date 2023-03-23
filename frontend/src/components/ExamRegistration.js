@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
-import { useNavigate , Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function ExamRegistration() {
@@ -22,7 +22,6 @@ function ExamRegistration() {
         const resp = await axios.post("http://localhost:8000/api/exam-register/", data)
         if (resp.status === 200)
         {
-            console.log(resp.data)
             navigate("/login")
         } 
       } catch(error) {
@@ -37,15 +36,15 @@ function ExamRegistration() {
         <Form>
             {err && <span className='text-danger'>UserName Already taken or check your Email</span>}
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>users: <Form.Control name="users" type="text" placeholder="Users ID List" onChange={updateData} /> </Form.Label>  
+              <Form.Label>users: <Form.Control name="users" type="text" placeholder="Users ID List" onChange={updateData} />
+              </Form.Label>  
             </Form.Group>
-            
-           
-           
-           
+
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Job Code: <Form.Control name="job" type="text" placeholder="Job Code" onChange={updateData} /></Form.Label>
+              <Form.Label>Job Code: <Form.Control name="job" type="text" placeholder="Job Code" onChange={updateData} />
+              </Form.Label>
             </Form.Group>
+
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Exam Date: <Form.Control name="exam-date" type="datetime-local" placeholder="Job Code" onChange={updateData} /></Form.Label>
             </Form.Group>
@@ -62,5 +61,3 @@ function ExamRegistration() {
 }
 
 export default ExamRegistration;
-
-

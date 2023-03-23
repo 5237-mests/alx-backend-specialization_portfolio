@@ -1,13 +1,14 @@
 import React, { useContext, useState} from 'react'
-import axios from 'axios';
-import Post from './Post';
-import Pagination from './Pagination'
-import { Button } from 'react-bootstrap';
-import { StatesContext } from './StatesContext';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import axios from 'axios';
+import ExamQuestionsForm from './ExamQuestionsForm';
+import NavigatorButton from './NavigatorButton'
+import { StatesContext } from './StatesContext';
 import CountdownTimer from './RemainingTime';
+// import ExamQuestions from './ExamQuestionsForm';
 
-function PaginatePosts() {
+function ExamQuestions() {
   const [loginSuccesss, setLoginSuccesss] = useState(true);
   let navigate = useNavigate()
 
@@ -62,9 +63,8 @@ function PaginatePosts() {
 
   if (logged) {
     setTimeout(()=>{
-      // console.log('hello*');
       setLoginSuccesss(false);
-    }, 7200)
+    }, 72000)
   }
 
   return (
@@ -88,16 +88,19 @@ function PaginatePosts() {
       <div className='row justify-content-center mt-5'>
         <h2 className='col-sm-6 col-lg-4'>Exam on Progress!</h2> 
         <hr/>
+
         <CountdownTimer />
         <hr/>
-        <Pagination paginatePrev={paginatePrev} paginateNext={paginateNext}/>
+
+        <NavigatorButton paginatePrev={paginatePrev} paginateNext={paginateNext}/>
         <hr/>
+
         <p>{currentPage} of {posts.length - 1}</p>
-        <Post currentPosts={currentPosts}/>   
+        <ExamQuestionsForm currentPosts={currentPosts}/>   
       </div>
       }
     </div>
   )
 }
 
-export default PaginatePosts;
+export default ExamQuestions;

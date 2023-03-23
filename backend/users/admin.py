@@ -4,10 +4,10 @@ from .models import Employee
 
 # Register your models here.
 
-class UserAdmin(UserAdmin):
+class MyUserAdmin(admin.ModelAdmin):
     # ordering = ('-date_joined',)
     #list_display = ('username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser')
-    list_display = ('username', 'password')
-    #exclude = ("date_joined", )
-    # list_filter = ('username', 'firstname',)
-admin.site.register(Employee, UserAdmin)
+    fields = ('username', 'first_name', 'password', "email")
+    #exclude = ("date_joined", "middlename", "last_name", "curposition")
+    #list_filter = ('username', 'firstname', "email", "password")
+admin.site.register(Employee, MyUserAdmin)

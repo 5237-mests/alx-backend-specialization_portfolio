@@ -17,11 +17,14 @@ urlpatterns = [
     path("api/questions/<str:jobCode>/", views.QuestionListAPIViewByJobCode.as_view(), name="question-by-job-code"),
     
     path("api/exam-result/", views.ExamResultListCreateView.as_view(), name="exam-result"),
-    path("api/exam-result/<int:pk>/", views.ExamResultDeleteUpdateGetAPIView.as_view(), name="exam-detail"),
-    path("api/exam-result-by-jobid/<int:pk>/", views.ExamResultDeleteUpdateGetByJob.as_view()),
+    path("api/exam-result/<int:username>/", views.ExamResultsForUserAPIView.as_view(), name="exam-detail"),
+    path("api/exam-result/<int:username>/<int:jobid>/", views.ExamResultDeleteUpdateGetAPIView.as_view(), name="exam-detail"),
+    #path("api/exam-result-by-jobid/<int:pk>/", views.ExamResultDeleteUpdateGetByJob.as_view()),
     path("api/exam-register/", views.ExamRegisterAPIView.as_view(), name="exam-register"),
     # Exam Candidates
     path("api/exam-cand/", views.ExamCandiateListCreateView.as_view(), name="exam-cand-list"),
-    path("api/exam-cand/<int:pk>/", views.ExamCandDeleteUpdateGetAPIView.as_view(), name="exam-can-detail"),
+    path("api/exam-cand/<int:username>/", views.ExamAvailableListView.as_view(), name="exam-cand-list"),
+    path("api/exam-cand-update/<int:username>/<int:jobid>/", views.UpdateCandidateExamTaken.as_view(), name="exam-can-detail"),
+    path("api/exam-cand/<int:username>/<int:jobid>/", views.ExamCandDeleteUpdateGetAPIView.as_view(), name="exam-can-detail"),
     # path("api/register/", views.UserLogin.as_view(), name="register"),
 ]

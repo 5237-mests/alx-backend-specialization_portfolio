@@ -1,11 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {StatesContext} from './StatesContext'
+import API from './API';
+import '../CSS/AllResults.css'
 
 function ExamResult() {
-    const {score}  =useContext(StatesContext);
+    const {score, userid}  =useContext(StatesContext);
     const [pass, setPass] = useState(false);
+    const [results, setResults] = useState([])
 
    useEffect(()=>{
+      (
+         async ()=>{
+            
+               try{
+                const examresult = await API.get(`api/exam-result/${userid}/`)
+               //  setScore({"score":examresult.data.score, "total": examresult.data.total})
+               //  navigate("/exam-result")
+               setResults(examresult.data)
+               }
+               catch(e)
+               {
+                  setResults([])
+               }
+             
+         }
+      )()
       function checkpass(){
          if (score.score / score.total >= 0.5) {
             setPass(true);
@@ -16,8 +35,28 @@ function ExamResult() {
 
   return (
     <div className='container-fluid bcg'>
+
+
+<table className='table'>
+        <thead>
+          <th>Employee Id</th>
+          <th>First Name</th>
+          <th> Last Name</th>
+          <th> Job Code</th>
+          <th> Score</th>
+        </thead>
+         {results && results.map(result => (
+        <tr key={result.id}>
+          <td>{result.user.username}</td>
+          <td>{result.user.first_name}</td>
+          <td>{result.user.last_name}</td>
+          <td>{result.job.jobCode}</td>
+          <td>{Math.round(result.score * 100 / result.total, 2)}%</td>
+        </tr>
+        ))}
+      </table>
        
-        {
+        {/* {
         score.score && score.total?
             <div className='container'>
                      <div className='row justify-content-center mt-1 view-result'>
@@ -42,7 +81,7 @@ function ExamResult() {
                          </div>
                       </div>
                       </div>
-                }
+                } */}
 
     </div>
   )

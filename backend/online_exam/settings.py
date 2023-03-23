@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'users',
     'questions',
     'rest_framework',
-    "rest_framework.authtoken",
+    # "rest_framework.authtoken",
     # 'knox',
     'corsheaders',
     #'django.contrib.sessions',
@@ -135,8 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
         #'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'knox.auth.TokenAuthentication',
     ],
@@ -144,14 +144,32 @@ REST_FRAMEWORK = {
     "rest_framework.permissions.AllowAny"
     ]
 }
-from datetime import timedelta
-SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=100),
-     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-     'ROTATE_REFRESH_TOKENS': True,
-     'BLACKLIST_AFTER_ROTATION': True
-}
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+     "http://127.0.0.1:3000",
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000',
+                         "http://127.0.0.1:3000"]
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
+                        "http://127.0.0.1:3000"]
+
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE="Lax"
+CSRF_COOKIE_SECURE = False
+CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN" # _      X-Y-C-CSRFTOKEN
+CSRF_COOKIE_NAME = "csrftoken"
+SESSION_COOKIE_NAME = "sessionid"
+CORS_ALLOW_HEADERS = [
+    "csrftoken",
+    'content-type',
+    'x-csrftoken',
+    'sessionid',
+    'authorization'
+]
+
+CORS_EXPOSE_HEADERS=["Content-Type", "X-CSRFToken", "Cookie"]

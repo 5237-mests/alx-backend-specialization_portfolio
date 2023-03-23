@@ -6,6 +6,7 @@ import ExamQuestionsForm from './ExamQuestionsForm';
 import NavigatorButton from './NavigatorButton'
 import { StatesContext } from './StatesContext';
 import CountdownTimer from './RemainingTime';
+import API from './API';
 // import ExamQuestions from './ExamQuestionsForm';
 
 function ExamQuestions() {
@@ -13,6 +14,7 @@ function ExamQuestions() {
   let navigate = useNavigate()
 
   let {
+    job,
     setIsloading,
     userid,
     setJob,
@@ -29,22 +31,34 @@ function ExamQuestions() {
   const fetchPosts = async () => {
     
     setIsloading(true);
-    const resp = await axios.get(`http://localhost:8000/api/exam-cand/${userid}`)
-    let joob = resp.data.job
-    console.log(joob, "The job")
-    setJob(joob)
-    if(resp.data.job)
-    {
-      const res = await axios.get(`http://localhost:8000/api/questions/${joob}`)
+  try{
+   
+    console.log("The Job is is", job)
+      const res = await API.get(`api/questions/${job}`)
       console.log(res.data, "all qw")
       setPosts(res.data);
       setIsloading(false);
       setStarted(true)
-      if (res.data && res.data.length >= 1)
-      {
-        setProgress(true)
-      }
-    }
+      setProgress(true)
+      localStorage.setItem("isLoading", false)
+      localStorage.setItem("started", true)
+      localStorage.setItem("progress", true)
+      navigate("/exam")
+   
+  }
+  catch (e)
+  {
+    console.log("No questions")
+    
+    setIsloading(false)
+    setStarted(false)
+    setProgress(false)
+    localStorage.setItem("isLoading", false)
+    localStorage.setItem("started", false)
+    localStorage.setItem("progress", false)
+    navigate("/")
+  }
+    
   }
   const currentPosts = posts.slice(currentPage, currentPage + postsPerPage);
   // paginate
@@ -54,12 +68,18 @@ function ExamQuestions() {
   const paginateNext = ()=> {
     setCurrentPage(currentPage = currentPage < posts.length - 1? currentPage + postsPerPage : posts.length - 1)
   }
-  const viewResult = async ()=>{
-    const examresult = await axios.get(`http://localhost:8000/api/exam-result/${userid}/`)
-    console.log("exam result", examresult)
-    setScore({"score":examresult.data.score, "total": examresult.data.total})
-    navigate("/exam-result")
-  }
+  // const viewResult = async ()=>{
+  //  try{
+  //   const examresult = await API.get(`api/exam-result/${userid}/`)
+    
+  //   setScore({"score":examresult.data.score, "total": examresult.data.total})
+  //   navigate("/exam-result")
+  //  }
+  //  catch(e)
+  //  {
+  //     navigate("/")
+  //  }
+  // }
 
   if (logged) {
     setTimeout(()=>{
@@ -67,16 +87,19 @@ function ExamQuestions() {
     }, 72000)
   }
 
+
   return (
     <div className='container-fluid '>
-      {!eligble?
+      {/* {!eligble?
       <div className='row'>
          {logged && loginSuccesss && <h5 className='text-success border border-light bg-light py-3 text-center'>You Logged in successfully!</h5>}
         <div className='text-center text-secondary mt-5 view-result'>
             <Button className='bg-secondary' onClick={viewResult}>View Result</Button>
         </div>
       </div>
-      :eligble && !progress?
+      :*/}
+      {
+      eligble && !progress? 
       <div className='row justify-content-center bcg'>
        
         <div className=' mt-1 text-centerview-result'>

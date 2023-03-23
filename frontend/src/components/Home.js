@@ -9,6 +9,7 @@ function Home() {
               <span className='text-warning'>E</span>
               <span className='text-danger'>P</span>
             </h1>
+            
          </div>
     </div>
   )

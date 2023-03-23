@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
 import '../CSS/SignUpPage.css';  
+import API from './API';
 
 function SignUpPage() {
   const {
@@ -29,7 +30,10 @@ function SignUpPage() {
      
         console.log("The dara", data)
         try{
-          const resp = await axios.post("http://localhost:8000/api/users/", data)
+          const csrf = await API.get("auth/getcsrf/")
+          API.defaults.headers.common["X-CSRFToken"] = `${csrf.data.csrftoken}`;
+          console.log(csrf.data.csrftoken, "signup token")
+          const resp = await API.post("api/users/", data)
           console.log("The response is", resp)
           if (resp.status === 201)
           {
@@ -63,14 +67,14 @@ function SignUpPage() {
                   </Form.Group>
 
                   <Form.Group className="mb-3 " controlId="formBasicEmail">
-                    <Form.Label>Email: <Form.Control type="email" placeholder="email@example.com"   {...register('email', { required: true })} onChange={updateData}/>
+                    <Form.Label>Email: <Form.Control type="email" placeholder="email@example.com"   {...register('email', { required: false })} onChange={updateData}/>
                       {errors.email && 
                         <p className='text-danger'>Email is required.</p>}
                     </Form.Label>  
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Current Position: <Form.Control {...register('curposition', { required: true })} onChange={updateData}/>
+                    <Form.Label>Current Position: <Form.Control {...register('curposition', { required: false })} onChange={updateData}/>
                     {errors.curposition && 
                       <p className='text-danger'>Current Position is required.</p>} 
                     </Form.Label>  
@@ -79,21 +83,21 @@ function SignUpPage() {
 
                 <div className='col-sm col'>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>First Name: <Form.Control {...register('first_name', { required: true })} onChange={updateData}/>
+                    <Form.Label>First Name: <Form.Control {...register('first_name', { required: true})} onChange={updateData}/>
                       {errors.last_name && 
                         <p className='text-danger'>First name is required.</p>} 
                     </Form.Label>  
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Last Name: <Form.Control {...register('last_name', { required: true })} onChange={updateData}/>
+                    <Form.Label>Last Name: <Form.Control {...register('last_name', { required: false })} onChange={updateData}/>
                       {errors.last_name && 
                         <p className='text-danger'>Last name is required.</p>}
                     </Form.Label>  
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Middle Name: <Form.Control  {...register('middlename', { required: true })} onChange={updateData}/>
+                    <Form.Label>Middle Name: <Form.Control  {...register('middlename', { required: false })} onChange={updateData}/>
                       {errors.middlename && 
                         <p className='text-danger'>Middle name is required.</p>}
                     </Form.Label>  

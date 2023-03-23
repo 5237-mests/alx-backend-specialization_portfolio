@@ -8,9 +8,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import '../CSS/Login.css';
 
+import API from './API';
 
 function Login() {
-  const {setEligble, setLogged, setUserid, setToken} = useContext(StatesContext)
+  const {setEligble, setLogged, setUserid, setIsAuthenticated, setIsAdmin} = useContext(StatesContext)
   
   const {
     register,
@@ -30,41 +31,87 @@ function Login() {
   }
 
   // function which checks user is eligble for exam?
-  const sendData = async ()=>{
+  const sendData = async ()=>{   
+    
+   
+        // get csrf token -> free 
+        // login post request -> csrf 
+        // user = authenticate (username, password)
+        // login(request, user) -> request.session.session_key
+        // axios.defaults.withcredential = true;
+        // Next request Session.objects.get(pk=req.session.session_key)
+        // is session foun authen 
+
+             const csrf = await API.get("auth/getcsrf/") //free to get csrf
+             API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`; // for all post req
+             const logResp = await API.post("auth/login", data) //try to login user
+            if (logResp.status == 200)
+            {
+              setIsAuthenticated(true)
+              localStorage.setItem("isAuthenticated", true); 
+              const resp = await API.get(`api/users/${data.username}/`)
+              console.log(resp, "is user")
+              setLogged(true)
+              setUserid(data.username)
+              setEligble(false)
+              const superuser = resp.data.is_superuser
+              console.log(superuser, "super")
+              if (superuser)
+              {
+                setIsAdmin(true)
+                localStorage.setItem("isAdmin", true)
+              }
+              else {
+                setIsAdmin(false)
+                localStorage.setItem("isAdmin", false)
+              }
+              
+              localStorage.setItem("eligble", false)
+              localStorage.setItem("logged", true)
+              navigate("/")
+              // console.log(resp.data.id, "the userid")
+               // search exam result by userid
+
+              //  try{
+              //   const examCand = await API.get(`api/exam-cand/${resp.data.id}/`) // search exam cand by userid
+              //   console.log(examCand.data, "candidate job")
+
+              //   try {
+              //     const examTaken = await API.get(`api/exam-result/${resp.data.username}/`)
+              //     console.log(examTaken)
+              //     console.log('exam taken', examTaken.data)
+              //     navigate("/exam-result")
+              //   }
+              //   catch (e)
+              //   {
+              //     console.log("Exam not taken")
+              //     setEligble(true)
+              //     localStorage.setItem("logged", true)
+              //     localStorage.setItem("eligble", true)
+              //     navigate("/exam")
+                  
+              //   }
+
+              // }
+              // catch (e){
+              //   console.log("Not Eligble For exam")
+              //   setEligble(false)
+              //   localStorage.setItem("eligble", false)
+              //   navigate("/")
+              // }
+             
+            
+            }
+            else{
+              setIsAuthenticated(false)
+              localStorage.setItem("isAuthenticated", false)
+              localStorage.setItem("eligble", false)
+              localStorage.setItem("logged", false)
+              setLogged(false)
+              setEligble(false)
+            }
+           
       
-      try {
-       
-        axios.defaults.headers.common["Authorization"] = ``;
-        const auth = await axios.post("http://127.0.0.1:8000/api/token/", data) //free to get token
-        // console.log(auth.data.token)
-        if (auth.status === 200)
-        {
-            setToken(auth.data.token)
-            axios.defaults.headers.common["Authorization"] = `Token ${auth.data.token}`;
-            // console.log(data.username, "user name")
-            const resp = await axios.get(`http://127.0.0.1:8000/api/users/${data.username}/`)
-            // console.log(resp, "is user")
-            setLogged(true)
-            setUserid(resp.data.id)
-            // console.log(resp.data.id, "the userid")
-            const examTaken = await axios.get(`http://localhost:8000/api/exam-result/${resp.data.id}/`)
-            const examCand = await axios.get(`http://localhost:8000/api/exam-cand/${resp.data.id}/`)
-            // console.log("examTaken", examTaken)
-            // console.log("exam cand", examCand)
-            if (examCand.data.user && !examTaken.data.user)
-              {
-                setEligble(true)
-                navigate("/exam")
-              }
-              else
-              {
-                setEligble(false)
-                navigate("/exam")
-              }
-        } 
-      } catch(error) {
-        setErr(true)
-      }
   }
 
   return (

@@ -1,46 +1,35 @@
-# from django.shortcuts import render
-from django.urls import path
+import json
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from django.http import HttpResponse
-# from . import views
-# Create your views here.
-
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 
-@api_view(["POST"])
-def logout_view(request):
-    logout(request)
-    return Response({"status": "OK"}, status=status.HTTP_200_OK)
 
-@api_view(["POST"])
-def login_view(request):
-    # print("The request", request)
-    if request.method == 'POST':
-        username = request.data.get('username')
-        password = request.data.get('password')
-        # print(username, password)
-        user = authenticate(request, username=username, password=password) # check on Db
-        print(user, "is user")
-        print(username, "user username")
-        print(password, "user password")
+def get_csrftoken(request):
+    """Get CSRF Token"""
+    resp = JsonResponse({"csrftoken": get_token(request)})
+    return resp
+
+
+@require_POST
+def LoginAPIView(request):
+    """Authenicate and give session id to user up on login"""
+    data = json.loads(request.body)
+    print("login dtaa", data)
+    username = data.get("username")
+    password = data.get("password")
+    if username and password:
+        user = authenticate(username=username, password=password)
+        print("The user is", user)
         if user is not None:
             login(request, user)
-            headers = {}
-            try:
-                token = Token.objects.get(user_id=user.id)
-                headers["Authorization"] = token.key
-            except Token.DoesNotExist:
-                token = Token.objects.create(user=user)
-                headers["Authorization"] = token.key
-               
-            return Response({"status" :"OK", "userid": user.id}, status=status.HTTP_200_OK, headers=headers)
-        else:
-            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+            return JsonResponse({"status": "logged in"}, status=status.HTTP_200_OK)
+    return JsonResponse({"status": "invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    else:
-        return Response({"try": "other"}, status=status.HTTP_400_BAD_REQUEST)
+
+def logoutAPIView(request):
+    """Log out user"""
+    logout(request)
+    return JsonResponse({"status": "OK"}, status=status.HTTP_200_OK)

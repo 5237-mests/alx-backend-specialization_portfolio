@@ -4,35 +4,45 @@ import Select from 'react-select'
 import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
 import '../CSS/AllResults.css'
+import API from './API'
 
 function AllResults() {
     const {token} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
-    axios.defaults.headers.common["Authorization"] = `Token ${token}`;
     useEffect(()=>{
       (async ()=>{
-        
-        const resp2 = await axios.get("http://localhost:8000/api/jobs/")
-        const res = []
-        console.log(resp2.data, "resp2")
-        for (let data of resp2.data) {
-          res.push({"value":data.id, "label": data.jobCode})
-        }
-        setJobs([{"value": "", "label":"ALL"}, ...res])
+          try {
+            const resp2 = await API.get("api/jobs/")
+            const res = []
+            console.log(resp2.data, "resp2")
+            for (let data of resp2.data) {
+              res.push({"value":data.id, "label": data.jobCode})
+            }
+            setJobs([{"value": "", "label":"ALL"}, ...res])
+          }
+          catch (e) {
+            
+          }
+         
       })()
     }, [])
 
   const getDetail = async (e) =>{
     let url = null;
     if (e.value){
-      url = `http://127.0.0.1:8000/api/exam-result-by-jobid/${e.value}`
+      url = `api/exam-result-by-jobid/${e.value}`
     } else {
-        url = `http://127.0.0.1:8000/api/exam-result/`
+        url = `api/exam-result/`
     }
-    const resp = await axios.get(url)
+    try{
+      const resp = await API.get(url)
     console.log(resp.data)
     setResults(resp.data)
+    }
+    catch (e) {
+      alert("No Result Available")
+    }
   }
 
   return (

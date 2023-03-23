@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import axios from 'axios';
 import { StatesContext } from './StatesContext';
 import { useNavigate } from 'react-router-dom';
+import API from './API';
 
 const ExamQuestions = ({currentPosts}) => {
   const {setEligble, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
@@ -21,11 +22,22 @@ const ExamQuestions = ({currentPosts}) => {
         'user': userid,
         'job': job,
       }
-      const resp = await axios.post("http://localhost:8000/api/exam-result/", payload)
+     const csrf = await API.get("auth/getcsrf/")
+     console.log("my csrf for q", csrf.data.csrftoken)
+     API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`
+     API.defaults.withCredentials = true
+     console.log("to post", API.defaults.headers)
+     // if record for username and job here 
+      const resp = await API.post("api/exam-result/", payload)
       setStarted(false)
       setEligble(false)
+      localStorage.setItem("started", false)
+      localStorage.setItem("eligble", false)
       setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
       submitRef.current = true
+      // update candidate as exam is taken
+      const update_exam= await API.post(`api/exam-cand-update/${userid}/${job}/`)
+      console.log("updated data", update_exam.data)
       nav("/exam-result")
     } catch(err){
       submitRef.current = true;
@@ -55,6 +67,7 @@ const ExamQuestions = ({currentPosts}) => {
             if (submitRef.current)
             {
               console.log("Already submitted")
+             // nav("/")
             }
             else {
             await handlesubmit();

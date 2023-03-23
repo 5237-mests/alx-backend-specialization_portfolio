@@ -11,7 +11,8 @@ import ExamResult from './components/ExamResult';
 import SignUpPage from './components/SignUpPage';
 import ExamRegistration from './components/ExamRegistration';
 import AllResults from './components/AllResults';
-
+import AvailableExams from './components/AvailableExams';
+import Profile from './components/Profile';
 function App() {
   return (
      <StatesProvider>
@@ -25,6 +26,8 @@ function App() {
             <Route path='/register' element={<SignUpPage/>}/>
             <Route path='/register-exam' element={<ExamRegistration/>}/>
             <Route path='/result-all' element={<AllResults/>}/>
+            <Route path='/avails' element={<AvailableExams/>}/>
+            <Route path='/profile' element={<Profile/>}/>
           </Routes>
           <Footer/>
       </Router>

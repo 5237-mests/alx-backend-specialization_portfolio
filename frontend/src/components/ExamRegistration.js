@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/esm/Button'
 import axios from 'axios'
 import {StatesContext} from './StatesContext'
 import { useNavigate } from 'react-router-dom';
-
+import API from './API'
 
 function ExamRegistration() {
   let [err, setErr] = useState(false);
@@ -19,7 +19,7 @@ function ExamRegistration() {
   const sendData = async (e)=>{
       e.preventDefault()
       try {
-        const resp = await axios.post("http://localhost:8000/api/exam-register/", data)
+        const resp = await API.post("api/exam-register/", data)
         if (resp.status === 200)
         {
             navigate("/login")

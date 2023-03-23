@@ -3,13 +3,16 @@ import { createContext, useState } from "react";
 export const StatesContext = createContext()
 
 export default function StatesProvider(props) {
-    const [token, setToken] = useState("")
+    
+const [exams, setExams] = useState([])
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated"))
+    const [isAdmin, setIsAdmin] = useState(localStorage.getItem("isAdmin"))
     const [exres, setExres] = useState({"finshed":false, "result": 0, "total": 0})
     const [userid, setUserid] = useState(0);
-    const [logged ,setLogged] = useState(false);
-    const [started, setStarted] = useState(false);
-    const [isloading, setIsloading] = useState(true);
-    const [eligble, setEligble] = useState(false);
+    const [logged ,setLogged] = useState(localStorage.getItem("logged"));
+    const [started, setStarted] = useState(localStorage.getItem("started"));
+    const [isloading, setIsloading] = useState(localStorage.getItem("isLoading"));
+    const [eligble, setEligble] = useState(localStorage.getItem("eligble"));
     const [posts, setPosts] = useState([]);
     const [job, setJob] = useState(0);
     let [currentPage, setCurrentPage] = useState(0);
@@ -21,7 +24,7 @@ export default function StatesProvider(props) {
         posts, setPosts,
         job, setJob, currentPage, setCurrentPage, postsPerPage, setpostsPerPage,
         started, setStarted, userid, setUserid,
-        exres, setExres,setScore,score,token, setToken
+        exres, setExres,setScore,score,isAuthenticated, setIsAuthenticated, exams,setExams, setIsAdmin,isAdmin
         }
 
     return (

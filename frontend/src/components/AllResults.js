@@ -33,7 +33,7 @@ function AllResults() {
   const getDetail = async (e) =>{
     let url = null;
     if (e.value){
-      url = `api/exam-result-by-jobid/${e.value}`
+      url = `api/exam-result-per-job/${e.value}`
     } else {
         url = `api/exam-result/`
     }

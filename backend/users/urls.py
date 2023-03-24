@@ -4,9 +4,9 @@ Authentication urls
 from django.urls import path
 from .views import LoginAPIView, get_csrftoken, logoutAPIView
 
-urlpatterns = [
 
-    path("getcsrf/", get_csrftoken),
-    path("login", LoginAPIView),
-    path("logout/", logoutAPIView),
+urlpatterns = [
+    path("getcsrf/", get_csrftoken),  # Get CSRFTOKEN
+    path("login", LoginAPIView),  # Authenticate login and send sessionid
+    path("logout/", logoutAPIView),  # logout session
 ]

@@ -10,7 +10,7 @@ class Job(models.Model):
     totalquestions = models.IntegerField(default=3)
     allowedtime = models.IntegerField(default=60)# in minute
     def __str__(self) -> str:
-        return f'{self.name}- {self.jobCode} - {self.jobCode}'
+        return f'{self.id} - {self.jobCode}'
 
 class Question(models.Model):
     """Question table"""

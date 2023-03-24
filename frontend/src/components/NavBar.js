@@ -58,7 +58,7 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-           {logged && exams? 
+           {logged ? 
               
                <Button className='text-light text-decoration-none' onClick={getExams}>
                  Exams

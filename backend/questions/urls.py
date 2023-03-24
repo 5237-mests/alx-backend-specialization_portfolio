@@ -1,31 +1,44 @@
+"""
+Question App urls
+"""
 from django.urls import path
-from. import views
-app_name = "questions"
-urlpatterns = [
+from . import views
 
-    path("api/users/<int:username>/", views.UserGetByUserNameAPIVIew.as_view()),
-     # User CRUD
-     path("api/autho/", views.TestAuthView.as_view()),
-    path("api/users/", views.UserListCreateView.as_view(), name="create-list"),
-    path("api/users/<int:pk>/", views.UserDeleteUpdateViewAPIVIew.as_view(), name="del-up-get"),
+
+app_name = "questions"
+
+
+urlpatterns = [
+    # User CRUD
+    path("api/users/", views.UserListCreateView.as_view()),
+    path("api/users/<int:username>/",
+         views.UserGetByUserNameAPIVIew.as_view()),
     # Job CRUD
-    path("api/jobs/", views.JobListCreateAPIView.as_view(), name="jobs"),
-    path("api/jobs/<int:pk>/", views.JobUpdateDeleteGetAPIVIew.as_view(), name="get-job"),
+    path("api/jobs/", views.JobListCreateAPIView.as_view()),
+    path("api/jobs/<int:pk>/",
+         views.JobUpdateDeleteGetAPIVIew.as_view()),
     # Question CRUD
-    path("api/questions/", views.QuestionListCreateAPIView.as_view(), name="questions"),
-    path("api/questions/<int:pk>/", views.QuestionListAPIViewByJobID.as_view(), name="question-by-job-id"),
-    path("api/questions/<str:jobCode>/", views.QuestionListAPIViewByJobCode.as_view(), name="question-by-job-code"),
-    
-    path("api/exam-result/", views.ExamResultListCreateView.as_view(), name="exam-result"),
-    path("api/exam-result/<int:username>/", views.ExamResultsForUserAPIView.as_view(), name="exam-detail"),
-    path("api/exam-result/<int:username>/<int:jobid>/", views.ExamResultDeleteUpdateGetAPIView.as_view(), name="exam-detail"),
-    #path("api/exam-result-by-jobid/<int:pk>/", views.ExamResultDeleteUpdateGetByJob.as_view()),
-    path("api/exam-register/", views.ExamRegisterAPIView.as_view(), name="exam-register"),
+    path("api/questions/",
+         views.QuestionListCreateAPIView.as_view()),
+    path("api/questions/<int:pk>/",
+         views.QuestionListAPIViewByJobID.as_view()),
+    # Exam Results filter views
+    path("api/exam-result/",
+         views.ExamResultListCreateView.as_view()),
+    path("api/exam-result-per-job/<int:pk>",
+         views.ExamResultsPerJobAdminView.as_view()),
+    path("api/exam-result/<int:username>/",
+         views.ExamResultsForUserAPIView.as_view()),
+    path("api/exam-result/<int:username>/<int:jobid>/",
+         views.ExamResultSingleAPIView.as_view()),
     # Exam Candidates
-    path("api/exam-cand/", views.ExamCandiateListCreateView.as_view(), name="exam-cand-list"),
-    path("api/exam-cand/bulk/", views.ExamCandidateBulkInsertView.as_view(), name="exam-cand-bulk"),
-    path("api/exam-cand/<int:username>/", views.ExamAvailableListView.as_view(), name="exam-cand-list"),
-    path("api/exam-cand-update/<int:username>/<int:jobid>/", views.UpdateCandidateExamTaken.as_view(), name="exam-can-detail"),
-    path("api/exam-cand/<int:username>/<int:jobid>/", views.ExamCandDeleteUpdateGetAPIView.as_view(), name="exam-can-detail"),
-    # path("api/register/", views.UserLogin.as_view(), name="register"),
+    path("api/exam-cand/",  # Get All Candidates or add to candidates
+         views.ExamCandiateListCreateView.as_view()),
+    path("api/exam-cand/bulk/",  # Add many candidates at once
+         views.ExamCandidateBulkInsertView.as_view()),
+    path("api/exam-cand/<int:username>/",  # Get all Exams A user reg for
+         views.ExamAvailableListView.as_view()),
+    path("api/exam-cand-update/<int:username>/<int:jobid>/",
+         views.UpdateCandidateExamTaken.as_view()),
+    # get update status of exam cand
 ]

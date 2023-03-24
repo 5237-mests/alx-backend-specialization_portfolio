@@ -53,7 +53,7 @@ function Login() {
               console.log(resp, "is user")
               setLogged(true)
               setUserid(data.username)
-              setEligble(false)
+              //setEligble(false)
               const superuser = resp.data.is_superuser
               console.log(superuser, "super")
               if (superuser)
@@ -67,7 +67,7 @@ function Login() {
                 localStorage.setItem("isAdmin", false)
               }
               
-              localStorage.setItem("eligble", false)
+              //localStorage.setItem("eligble", false)
               localStorage.setItem("logged", true)
               localStorage.setItem("userid", data.username)
               navigate("/")
@@ -107,10 +107,10 @@ function Login() {
             else{
               setIsAuthenticated(false)
               localStorage.setItem("isAuthenticated", false)
-              localStorage.setItem("eligble", false)
+              //localStorage.setItem("eligble", false)
               localStorage.setItem("logged", false)
               setLogged(false)
-              setEligble(false)
+             // setEligble(false)
             }
            
       

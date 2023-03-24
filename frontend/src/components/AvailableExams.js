@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import API from './API'
-import { Link } from 'react-router-dom'
 
 
 function AvailableExams() {
@@ -35,4 +33,4 @@ function AvailableExams() {
   )
 }
 
-export default AvailableExams
+export default AvailableExams;

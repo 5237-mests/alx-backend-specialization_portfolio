@@ -4,15 +4,13 @@ import  Button  from 'react-bootstrap/Button'
 import { StatesContext } from './StatesContext'
 import API from './API'
 import Select from 'react-select'
-import { useNavigate } from 'react-router-dom'
 import Login from './Login'
 import Home from './Home'
 
 function BulkInsert() {
-    const {userid, job, isAdmin} = useContext(StatesContext)
+    const {userid, isAdmin} = useContext(StatesContext)
     const [jobs, setAllJobs] = useState([])
     const [data, setData] = useState({})
-    const nav = useNavigate()
     const [selectdJob, setSelectedJob] = useState("")
     const getData = async () => {
         const resp = await API.get("api/jobs/")

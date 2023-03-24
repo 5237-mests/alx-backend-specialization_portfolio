@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import Select from 'react-select'
 import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
@@ -9,7 +8,7 @@ import Home from './Home'
 import Login from './Login'
 
 function AllResults() {
-    const {token, userid, isAdmin} = useContext(StatesContext);
+    const {userid, isAdmin} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
     useEffect(()=>{

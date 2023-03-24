@@ -1,7 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Form } from 'react-bootstrap'
-import axios from 'axios';
 import { StatesContext } from './StatesContext';
 import { useNavigate } from 'react-router-dom';
 import API from './API';

@@ -5,9 +5,11 @@ import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
 import '../CSS/AllResults.css'
 import API from './API'
+import Home from './Home'
+import Login from './Login'
 
 function AllResults() {
-    const {token} = useContext(StatesContext);
+    const {token, userid, isAdmin} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
     useEffect(()=>{
@@ -45,6 +47,18 @@ function AllResults() {
     }
   }
 
+  if (!userid)
+{
+    return (
+        <Login/>
+    )
+}
+else if (userid && !isAdmin)
+{
+  return (
+    <Home/>
+  )
+}
   return (
     <div className='container-fluid mt-3 view-result'>
        <div className='row'>

@@ -14,6 +14,7 @@ function ExamQuestions() {
   let navigate = useNavigate()
 
   let {
+    setAllowedTime,
     job,
     setIsloading,
     userid,

@@ -1,5 +1,6 @@
 from rest_framework import generics
 from users.models import Employee
+from datetime import datetime
 import random
 import json
 from .serializer import (
@@ -84,7 +85,7 @@ class UserDeleteUpdateViewAPIVIew(generics.RetrieveUpdateDestroyAPIView):
 
 class JobListCreateAPIView(generics.ListCreateAPIView):
     authentication_classes = [SessionAuthentication]
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 class JobUpdateDeleteGetAPIVIew(generics.RetrieveUpdateDestroyAPIView):
@@ -185,9 +186,9 @@ class UpdateCandidateExamTaken(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         userid = kwargs.get("username", None)
         jobid = kwargs.get("jobid", None)
-        print(request.data, "update data hackiy way")
-        user = Employee.objects.get(username=userid)
-        job = Employee.objects.get(pk=jobid)
+        print(kwargs, "update data hackiy way")
+        user = Employee.objects.filter(username=userid).first()
+        job = Job.objects.get(pk=jobid)
         cand = ExamCandidates.objects.filter(user__username=userid, job__pk=jobid).first()
         if cand is None:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
@@ -243,7 +244,40 @@ class ExamResultDeleteUpdateGetByJob(generics.RetrieveUpdateDestroyAPIView):
             return Response({"status": "No Result Found For the Job"}, status=status.HTTP_404_NOT_FOUND)
         serializer = ExamResultSerializer(queryset, many=True)
         return Response(serializer.data)
-   
+
+class ExamCandidateBulkInsertView(generics.GenericAPIView):
+    #permission_classes = [IsAdminUser]
+    authentication_classes = [SessionAuthentication]
+    queryset = ExamCandidates.objects.all()
+    def post(self, request, *args, **kwargs):
+        payload = request.data
+        empIds = [id.strip() for id in payload.get("empId").split(",")]
+        empIds = [id for id in empIds if  id and " " not in id]
+        employees = [str(emp.username) for emp in Employee.objects.all()]
+        empIds = [id for id in empIds if id in employees]
+        try:
+            job = Job.objects.get(pk=payload.get("job", None))
+        except Job.DoesNotExist:
+            return Response({"Job": "Not Exist"}, status=status.HTTP_404_NOT_FOUND)
+        for emp in empIds:
+            try:
+                ExamCandidates.objects.create(user=Employee.objects.filter(username=emp).first(),
+                                              job = job,
+                                              examDate=datetime(payload.get("year", 2050),
+                                                                payload.get("month", 1),
+                                                                payload.get("day", 1),
+                                                                payload.get("hour", 3),
+                                                                payload.get("minute", 1),
+                                                                payload.get("second", 10))
+                                              )
+            except Exception:
+                return Response({"error": "Occur in creation"})
+        examcand = ExamCandidates.objects.all()
+        serializer = ExamCandidateSerializer(examcand, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
 class ExamCandiateListCreateView(generics.ListCreateAPIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = []
@@ -270,6 +304,15 @@ class ExamCandDeleteUpdateGetAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = ExamCandidates.objects.all()
     serializer_class = ExamCandidateSerializer
+    # def post(self, request, *args, **kwargs):
+    #     user = Employee.objects.filter(username=kwargs["username"]).first()
+    #     job = Job.objects.get(pk=kwargs["jobid"])
+    #     res = ExamCandidates.objects.create(
+    #         user=user,
+    #         job=job,
+
+
+    #     )
     def get(self, request, *args, **kwargs):
         queryset = ExamCandidates.objects.filter(user__username= kwargs["username"], job__pk=kwargs["jobid"]).first()
         if queryset is None:

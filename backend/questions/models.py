@@ -8,6 +8,7 @@ class Job(models.Model):
     jobCode = models.CharField(max_length=255, null=False, blank=False)
     jobGrade = models.CharField(max_length=20, null=False, blank=False)
     totalquestions = models.IntegerField(default=3)
+    allowedtime = models.IntegerField(default=60)# in minute
     def __str__(self) -> str:
         return f'{self.name}- {self.jobCode} - {self.jobCode}'
 

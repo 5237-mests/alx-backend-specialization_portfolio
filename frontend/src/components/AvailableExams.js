@@ -7,13 +7,17 @@ import { Link } from 'react-router-dom'
 
 
 function AvailableExams() {
-        const {exams, setJob, setUserid, setEligble} = useContext(StatesContext)
+        const {exams, setJob, setUserid, setEligble, setAllowedTime} = useContext(StatesContext)
         console.log("exams", exams)
         const nav =  useNavigate()
 
-        const startExam = async (exam)=>{
+        const startExam = (exam)=>{
+                console.log("You are Going toke", exam)
                 setJob(exam.job.id);
                 setUserid(exam.user.username)
+                console.log(exam.job.allowedtime, "allowed time")
+                const alloweT = exam.job.allowedtime
+                setAllowedTime(alloweT)
                 setEligble(true)
                 localStorage.setItem("eligble", true)
             nav("/exam")

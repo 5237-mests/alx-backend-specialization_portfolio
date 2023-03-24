@@ -24,10 +24,11 @@ function NavBar() {
       setIsAdmin(false)
      localStorage.removeItem("logged")
      localStorage.removeItem("started")
-       localStorage.removeItem("progress")
+     localStorage.removeItem("progress")
      localStorage.removeItem("isLoading")
      localStorage.removeItem("eligble")
      localStorage.removeItem("isAdmin")
+     localStorage.removeItem("userid")
 
       navigate('/');
   }
@@ -67,10 +68,16 @@ function NavBar() {
              }
           </Nav>
           <Nav>
-          {isAdmin && 
-               <Link className='btn text-light text-decoration-none' to="/result-all">
-               Results
-              </Link>
+          {isAdmin && userid && 
+                 <>
+                 <Link className='btn text-light text-decoration-none' to="/result-all">
+                   Results
+                   </Link>
+                     
+                      <Link className='btn text-light text-decoration-none' to="/bulk-insert">
+                      Candidates
+                    </Link>
+                 </>
                }
           </Nav>
           <Nav>

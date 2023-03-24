@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import API from './API';
 
 const ExamQuestions = ({currentPosts}) => {
-  const {setEligble, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
+  const {setEligble,allowedtime, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
   const nav = useNavigate()
   let [data, setData] = useState({});
   const dataRef = useRef(data);
   const submitRef = useRef(null)
   submitRef.current = false;
   dataRef.current = data;
-  
+  console.log("Aloowed Time is", allowedtime)
   const handlesubmit = async ()=> {
     try {
       let payload = {
@@ -72,7 +72,7 @@ const ExamQuestions = ({currentPosts}) => {
             else {
             await handlesubmit();
             }
-        }, 10000);
+        }, allowedtime*500); // Normally 60 * 1000
   }, [])
 
   if (isloading) {

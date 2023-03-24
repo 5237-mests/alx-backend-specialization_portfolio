@@ -23,6 +23,7 @@ urlpatterns = [
     path("api/exam-register/", views.ExamRegisterAPIView.as_view(), name="exam-register"),
     # Exam Candidates
     path("api/exam-cand/", views.ExamCandiateListCreateView.as_view(), name="exam-cand-list"),
+    path("api/exam-cand/bulk/", views.ExamCandidateBulkInsertView.as_view(), name="exam-cand-bulk"),
     path("api/exam-cand/<int:username>/", views.ExamAvailableListView.as_view(), name="exam-cand-list"),
     path("api/exam-cand-update/<int:username>/<int:jobid>/", views.UpdateCandidateExamTaken.as_view(), name="exam-can-detail"),
     path("api/exam-cand/<int:username>/<int:jobid>/", views.ExamCandDeleteUpdateGetAPIView.as_view(), name="exam-can-detail"),

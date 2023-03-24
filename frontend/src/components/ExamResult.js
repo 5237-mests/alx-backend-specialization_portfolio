@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import {StatesContext} from './StatesContext'
 import API from './API';
 import '../CSS/AllResults.css'
+import Login from './Login';
 
 function ExamResult() {
     const {score, userid}  =useContext(StatesContext);
@@ -32,7 +33,12 @@ function ExamResult() {
       }
       checkpass();
    }, []);
-
+   if (!userid)
+   {
+       return (
+           <Login/>
+       )
+   }
   return (
     <div className='container-fluid bcg'>
 

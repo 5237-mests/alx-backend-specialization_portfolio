@@ -60,6 +60,7 @@ function Login() {
               {
                 setIsAdmin(true)
                 localStorage.setItem("isAdmin", true)
+
               }
               else {
                 setIsAdmin(false)
@@ -68,6 +69,7 @@ function Login() {
               
               localStorage.setItem("eligble", false)
               localStorage.setItem("logged", true)
+              localStorage.setItem("userid", data.username)
               navigate("/")
               // console.log(resp.data.id, "the userid")
                // search exam result by userid

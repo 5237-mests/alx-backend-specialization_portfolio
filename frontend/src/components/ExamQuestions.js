@@ -1,31 +1,25 @@
 import React, { useContext, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import axios from 'axios';
+import Button  from 'react-bootstrap/Button';
 import ExamQuestionsForm from './ExamQuestionsForm';
 import NavigatorButton from './NavigatorButton'
 import { StatesContext } from './StatesContext';
 import CountdownTimer from './RemainingTime';
 import API from './API';
-// import ExamQuestions from './ExamQuestionsForm';
 
 function ExamQuestions() {
   const [loginSuccesss, setLoginSuccesss] = useState(true);
   let navigate = useNavigate()
 
   let {
-    setAllowedTime,
     job,
     setIsloading,
-    userid,
-    setJob,
     setPosts,
     posts,
     setStarted,
     currentPage,
     setCurrentPage,
     postsPerPage,
-    setScore,
     logged,
     eligble} = useContext(StatesContext);
     const [progress, setProgress] = useState(false)

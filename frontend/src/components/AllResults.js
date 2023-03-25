@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import Select from 'react-select'
 import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
@@ -7,13 +6,14 @@ import '../CSS/AllResults.css'
 import API from './API'
 import Home from './Home'
 import Login from './Login'
+import Button  from 'react-bootstrap/Button'
 
 function AllResults() {
     const {token, userid, isAdmin} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
-    useEffect(()=>{
-      (async ()=>{
+
+    const updateData = async ()=>{
           try {
             const resp2 = await API.get("api/jobs/")
             const res = []
@@ -27,9 +27,7 @@ function AllResults() {
             
           }
          
-      })()
-    }, [])
-
+      }
   const getDetail = async (e) =>{
     let url = null;
     if (e.value){
@@ -61,8 +59,11 @@ else if (userid && !isAdmin)
 }
   return (
     <div className='container-fluid mt-3 view-result'>
-       <div className='row'>
-        <div className='col-sm-6 col-lg-4'>
+       <div className='row justify-content-center'>
+        <div className='col-sm-3 col-lg-2'>
+          <Button onClick={updateData}>Update</Button>
+        </div>
+        <div className='col-sm-3 col-lg-2 me-auto'>
         {jobs && <Select options={jobs} onChange={(e)=>getDetail(e)}/>}
         </div>
        </div>

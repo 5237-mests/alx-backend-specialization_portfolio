@@ -13,17 +13,14 @@ function ExamResult() {
       (
          async ()=>{
             
-               try{
-                const examresult = await API.get(`api/exam-result/${userid}/`)
-               //  setScore({"score":examresult.data.score, "total": examresult.data.total})
-               //  navigate("/exam-result")
+            try{
+               const examresult = await API.get(`api/exam-result/${userid}/`)
                setResults(examresult.data)
-               }
-               catch(e)
-               {
-                  setResults([])
-               }
-             
+            }
+            catch(e)
+            {
+               setResults([])
+            }
          }
       )()
       function checkpass(){
@@ -35,15 +32,13 @@ function ExamResult() {
    }, []);
    if (!userid)
    {
-       return (
-           <Login/>
-       )
+      return (
+         <Login/>
+      )
    }
   return (
     <div className='container-fluid bcg'>
-
-
-<table className='table'>
+      <table className='table'>
         <thead>
           <th>Employee Id</th>
           <th>First Name</th>
@@ -61,34 +56,7 @@ function ExamResult() {
         </tr>
         ))}
       </table>
-       
-        {/* {
-        score.score && score.total?
-            <div className='container'>
-                     <div className='row justify-content-center mt-1 view-result'>
-                        <div className='text-center justify-content-center '>
-                             <h2>Your Score</h2>
-                             <h3>You scored {score.score * 100 / score.total}%</h3>
-                             <h2 className='  font-weight-bold text-success m-3 mb-1'>{score.score}/{score.total}</h2>
-                              <div className='row justify-content-center'>
-                              <hr className='border border-secondary col-1 align-center mt-1 mb-1'/>
-                              </div>
-                              <div className='row justify-content-center'>
-                              <hr className='border border-secondary col-1 align-center'/>
-                              </div>
-                             {pass && <h2>You well done! Have a good day!</h2>}
-                        </div>
-                     </div>
-                     </div>:
-                      <div className='container'>
-                      <div className='row justify-content-center view-result'>
-                         <div className='text-center'>
-                              <h2 className='text-warning font-weight-bold'>No Data Available</h2>
-                         </div>
-                      </div>
-                      </div>
-                } */}
-
+      {pass && <h2>You well done! Have a good day!</h2>}
     </div>
   )
 }

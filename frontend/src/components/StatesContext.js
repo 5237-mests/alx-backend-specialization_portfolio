@@ -3,7 +3,6 @@ import { createContext, useState } from "react";
 export const StatesContext = createContext()
 
 export default function StatesProvider(props) {
-    
     const [exams, setExams] = useState([])
     const [allowedtime, setAllowedTime] = useState(3000)
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated"))
@@ -27,11 +26,11 @@ export default function StatesProvider(props) {
         started, setStarted, userid, setUserid,
         exres, setExres,setScore,score,isAuthenticated, setIsAuthenticated, exams,setExams, setIsAdmin,isAdmin,
         allowedtime, setAllowedTime
-        }
+    }
 
     return (
-       <StatesContext.Provider value={values}>
+        <StatesContext.Provider value={values}>
         {props.children}
-       </StatesContext.Provider>
+        </StatesContext.Provider>
     )
 }

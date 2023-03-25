@@ -13,25 +13,23 @@ function Main({logged, headers}) {
         alert(resp.data)
     } 
     const handleClick = (e)=>{
-        const userData = axios.get()
         setUserId(e)
     }
     // List all question on startup
     useEffect(()=>{
         fetchApi()
-        // alert(`logged in is ${logged}`)
     }, [logged])
   return (
     <div>
-            <p>Loading</p>
-           <ul>
-           {users.map(user=>(
-                <li>{user.username}
-                <Button onClick={()=> handleClick(user.id)}>User</Button>
-                </li>
-            ))}
-           </ul>
-           <h1>selected UserID {userId}</h1>
+        <p>Loading</p>
+        <ul>
+        {users.map(user=>(
+            <li>{user.username}
+            <Button onClick={()=> handleClick(user.id)}>User</Button>
+            </li>
+        ))}
+        </ul>
+        <h1>selected UserID {userId}</h1>
     </div>
   )
 }

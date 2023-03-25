@@ -1,6 +1,5 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import axios from 'axios';
 import Button from 'react-bootstrap/esm/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -9,47 +8,41 @@ import { StatesContext } from './StatesContext'
 import API from './API';
 
 function NavBar() {
-  const {logged,isAdmin,setIsAdmin, isAuthenticated, setLogged, setStarted,setEligble, setIsloading, setIsAuthenticated, exams, setExams, userid} = useContext(StatesContext)
+  const {logged,isAdmin,setIsAdmin, isAuthenticated, setLogged, setStarted,setEligble, setIsloading, setIsAuthenticated, setExams, userid} = useContext(StatesContext)
   let navigate = useNavigate();
   const logout = async ()=>{
-    
-    const resp = await API.get("auth/logout/")
+    await API.get("auth/logout/")
     setIsAuthenticated(false)
     localStorage.removeItem("isAuthenticated")
-    console.log(resp.data, "logout data")
-      setLogged(false);
-      setStarted(false);
-      setIsloading(false)
-      setEligble(false)
-      setIsAdmin(false)
-     localStorage.removeItem("logged")
-     localStorage.removeItem("started")
-     localStorage.removeItem("progress")
-     localStorage.removeItem("isLoading")
-     localStorage.removeItem("eligble")
-     localStorage.removeItem("isAdmin")
-     localStorage.removeItem("userid")
-
-      navigate('/');
+    setLogged(false);
+    setStarted(false);
+    setIsloading(false);
+    setEligble(false);
+    setIsAdmin(false);
+    localStorage.removeItem("logged");
+    localStorage.removeItem("started");
+    localStorage.removeItem("progress");
+    localStorage.removeItem("isLoading");
+    localStorage.removeItem("eligble");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("userid");
+    navigate('/');
   }
 
   const getExams = async () => {
-    
    try{
     const resp = await API.get(`api/exam-cand/${userid}`)
-    console.log(resp.data, "gt=et data?")
     const avail = resp.data.filter(exam=>!exam.exam_taken)
-    console.log(avail, "avails")
-   setExams(avail)
-   navigate("/avails")
+    setExams(avail)
+    navigate("/avails")
    }
    catch (e) {
     setExams(false)
    } 
-    }
-    const getProfile =() => {
-      navigate("/profile")
-    }
+  }
+  const getProfile =() => {
+    navigate("/profile")
+  }
 
   return (
     <Navbar bg="primary" expand="lg" variant='dark'>

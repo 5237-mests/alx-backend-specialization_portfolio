@@ -1,14 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
-import axios from 'axios'
-import {StatesContext} from './StatesContext'
 import { useNavigate } from 'react-router-dom';
 import API from './API'
 
 function ExamRegistration() {
   let [err, setErr] = useState(false);
-  const {setEligble, setLogged, setUserid} = useContext(StatesContext)
   const [data, setData] = useState({})
   let navigate = useNavigate()
   const updateData = (e) =>{

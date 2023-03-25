@@ -33,4 +33,4 @@ function AvailableExams() {
   )
 }
 
-export default AvailableExams
+export default AvailableExams;

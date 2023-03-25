@@ -77,7 +77,7 @@ function ExamQuestions() {
       eligble && !progress? 
       <div className='row justify-content-center bcg'>
        
-        <div className=' mt-1 text-centerview-result'>
+        <div className=' mt-1 text-center view-result'>
           {logged && loginSuccesss && <h5 className='text-success border border-light bg-light py-3 text-center'>You Logged in successfully!</h5>}
           <Button className='col-6 col-md-2 col-lg-2' onClick={fetchPosts}>Start Exam</Button>
         </div>

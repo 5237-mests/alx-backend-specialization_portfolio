@@ -22,7 +22,7 @@ function AvailableExams() {
         }
 
   return (
-    <div>
+    <div className='container view-result'>
     <h1>Available Exams</h1>
         <ol>
             {exams.map(exam=>!exam.exam_taken?(

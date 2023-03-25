@@ -12,6 +12,8 @@ function BulkInsert() {
     const [jobs, setAllJobs] = useState([])
     const [data, setData] = useState({})
     const [selectdJob, setSelectedJob] = useState("")
+    const [complete, setComplete] = useState(false)
+    const [load, setLoad] = useState(false)
     const getData = async () => {
         const resp = await API.get("api/jobs/")
         let jbs = []
@@ -34,10 +36,19 @@ function BulkInsert() {
                               "minute": data.minute
                                 }
             try {
+                setLoad(true)
+                setComplete(false)
                 const csrf = API.get("auth/getcsrf/")
                 API.defaults.headers["X-CSRFToken"] = `${(await csrf).data.csrftoken}`
                 const resp = await API.post("api/exam-cand/bulk/", payload)
-                 console.log(resp.data)
+                console.log(resp.data)
+                 
+                 setTimeout(()=> {
+                    setComplete(true)
+                    setTimeout(()=> setComplete(false), 4000)
+                    setLoad(false)
+                 }, 2000)
+                 
             }
             catch (e) {
                 console.log("Complte with Error")
@@ -103,13 +114,12 @@ else if (userid && !isAdmin)
            
             <input  onChange={(e)=>onChange(e)} className=' form-control' type="datetime-local" name="date"/>
              </div>
-            
+            {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
+            {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
             <button className='row btn btn-primary mt-3' onClick={sendData}>Submit</button>
 
         </div>
        </div>
-      
-
     </div>
   )
 }

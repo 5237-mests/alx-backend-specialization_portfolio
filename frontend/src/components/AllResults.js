@@ -9,7 +9,7 @@ import Login from './Login'
 import Button  from 'react-bootstrap/Button'
 
 function AllResults() {
-    const {token, userid, isAdmin} = useContext(StatesContext);
+    const {userid, isAdmin} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
 

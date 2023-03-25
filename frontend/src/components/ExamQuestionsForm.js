@@ -89,7 +89,7 @@ const ExamQuestions = ({currentPosts}) => {
     {!exres.finshed &&  
     <Form onSubmit={onSubmit}>
       {currentPosts.map((post) => (
-        <div>
+        <div key={post.id}>
           <h4>{ posts.indexOf(post)}. {post.text} tt</h4>
           <div className='mx-4'>
               <Form.Group>

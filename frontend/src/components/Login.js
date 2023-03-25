@@ -14,8 +14,8 @@ function Login() {
   
   const {
     register,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit
+    
   } = useForm();
 
   const [data, setData] = useState({})

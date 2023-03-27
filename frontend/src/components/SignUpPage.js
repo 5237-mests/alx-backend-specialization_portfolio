@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/esm/Button'
 import { Helmet } from 'react-helmet'
 import '../CSS/SignUpPage.css';  
 import API from './API';
+import favicon from '../assets/images/favicon_io(2)/favicon-16x16.png'
+
 
 function SignUpPage() {
   const {
@@ -42,7 +44,10 @@ function SignUpPage() {
 
   return (
     <div>
-      <Helmet><title>SignUpPage Page!</title></Helmet>
+      <Helmet>
+        <title>SignUpPage Page!</title>
+        <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
+      </Helmet>
       <div className='reg'>
         <div className='py-5 ms-auto me-auto'>
           {

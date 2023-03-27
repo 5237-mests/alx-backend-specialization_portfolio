@@ -18,6 +18,9 @@
 > Nodejs, npm 
 
 * First clone this repository to your local machine.
+```
+git clone https://github.com/GetacherD/alx-backend-specialization_portfolio.git
+```
 * After you clone the repo navigate to it.
 ```
 cd alx-backend-specialization_portfolio

@@ -1,8 +1,6 @@
 import React, { useContext, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-
 import Button  from 'react-bootstrap/Button';
-
 import ExamQuestionsForm from './ExamQuestionsForm';
 import NavigatorButton from './NavigatorButton'
 import { StatesContext } from './StatesContext';
@@ -29,19 +27,15 @@ function ExamQuestions() {
     
     setIsloading(true);
   try{
-   
-    console.log("The Job is is", job)
-      const res = await API.get(`api/questions/${job}`)
-      console.log(res.data, "all qw")
-      setPosts(res.data);
-      setIsloading(false);
-      setStarted(true)
-      setProgress(true)
-      localStorage.setItem("isLoading", false)
-      localStorage.setItem("started", true)
-      localStorage.setItem("progress", true)
-      navigate("/exam")
-   
+    const res = await API.get(`api/questions/${job}`)
+    setPosts(res.data);
+    setIsloading(false);
+    setStarted(true)
+    setProgress(true)
+    localStorage.setItem("isLoading", false)
+    localStorage.setItem("started", true)
+    localStorage.setItem("progress", true)
+    navigate("/exam")
   }
   catch (e)
   {

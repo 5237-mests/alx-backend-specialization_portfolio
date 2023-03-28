@@ -40,7 +40,7 @@ source /venv/bin/activate
 ```
 pip install -r requirement.txt
 ```
-* Create user and database on your MySQL server, give all previllages for your user's on your database. Put this credentials inside the setting of th backend directory, eplace the user name with your username, db with db name, password with your password.
+* Create user and database on your MySQL server, give all previllages for your user's on your database. Put this credentials inside the setting of th backend directory, replace the user name with your username, db with db name, password with your password.
 * navigate to backend directory.
 ```
 cd backend

@@ -1,16 +1,22 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
+import favicon from '../assets/images/favicon_io(1)/favicon-16x16.png'
 
 function Home() {
   return (
     <div className='home'>
-         <div className='row text-center font-weight-bold'>
-            <h1 className='col mt-5'>
-              <span className='text-success'>E</span>
-              <span className='text-warning'>E</span>
-              <span className='text-danger'>P</span>
-            </h1>
-            
-         </div>
+      <Helmet>
+        <title >Home Page</title>
+        <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
+      </Helmet>
+      <div className='row text-center font-weight-bold'>
+        <h1 className='col mt-5'>
+          <span className='text-success'>E</span>
+          <span className='text-warning'>E</span>
+          <span className='text-danger'>P</span>
+        </h1>
+        
+      </div>
     </div>
   )
 }

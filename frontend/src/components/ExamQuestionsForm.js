@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import API from './API';
 
 const ExamQuestions = ({currentPosts}) => {
-  const {setEligble,allowedtime, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext)
+  const {setEligble,allowedtime, posts, isloading, userid, job, setStarted, exres, setExres} = useContext(StatesContext);
+
   const nav = useNavigate()
   let [data, setData] = useState({});
   const dataRef = useRef(data);
   const submitRef = useRef(null)
   submitRef.current = false;
   dataRef.current = data;
-  console.log("Aloowed Time is", allowedtime)
   const handlesubmit = async ()=> {
     try {
       let payload = {
@@ -25,10 +25,8 @@ const ExamQuestions = ({currentPosts}) => {
         'job': job,
       }
      const csrf = await API.get("auth/getcsrf/")
-     console.log("my csrf for q", csrf.data.csrftoken)
      API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`
      API.defaults.withCredentials = true
-     console.log("to post", API.defaults.headers)
      // if record for username and job here 
       const resp = await API.post("api/exam-result/", payload)
       setStarted(false)
@@ -39,7 +37,6 @@ const ExamQuestions = ({currentPosts}) => {
       submitRef.current = true
       // update candidate as exam is taken
       const update_exam= await API.post(`api/exam-cand-update/${userid}/${job}/`)
-      console.log("updated data", update_exam.data)
       nav("/exam-result")
     } catch(err){
       submitRef.current = true;
@@ -74,7 +71,7 @@ const ExamQuestions = ({currentPosts}) => {
             else {
             await handlesubmit();
             }
-        }, allowedtime*500); // Normally 60 * 1000
+        }, allowedtime*60*1000); // Normally 60 * 1000
   }, [])
 
   if (isloading) {

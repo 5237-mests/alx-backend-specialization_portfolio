@@ -29,6 +29,9 @@ class Question(models.Model):
                             on_delete=models.CASCADE,
                             related_name="questions",
                             related_query_name="job")
+    class Meta:
+        """Specify multiple field combination as primary key"""
+        unique_together = (('text', 'job'),)
 
     def __str__(self) -> str:
         """str representaion"""

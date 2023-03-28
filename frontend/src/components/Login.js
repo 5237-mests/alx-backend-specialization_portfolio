@@ -6,6 +6,7 @@ import {StatesContext} from './StatesContext'
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import '../CSS/Login.css';
+import favicon from '../assets/images/favicon-16x16.png'
 
 import API from './API';
 
@@ -66,7 +67,10 @@ function Login() {
 
   return (
    <div>
-      <Helmet><title>Login Page</title></Helmet>
+      <Helmet>
+        <title >Login Page</title>
+        <link rel="icon" type="image/png" href={favicon} sizes="16x16"/>
+      </Helmet>
       <div className='log'>
         <div className=' py-5 ms-auto me-auto'>
           {

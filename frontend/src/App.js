@@ -14,6 +14,7 @@ import AllResults from './components/AllResults';
 import AvailableExams from './components/AvailableExams';
 import Profile from './components/Profile';
 import BulkInsert from './components/BulkInsert';
+import BulkInsertQuestions from './components/BulkInsertQuestions'
 function App() {
   return (
      <StatesProvider>
@@ -30,6 +31,7 @@ function App() {
             <Route path='/avails' element={<AvailableExams/>}/>
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/bulk-insert' element={<BulkInsert/>}/>
+            <Route path='/bulk-insert-questions' element={<BulkInsertQuestions/>}/>
           </Routes>
           <Footer/>
       </Router>

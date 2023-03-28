@@ -27,7 +27,9 @@ function SignUpPage() {
   const sendData = async ()=>{
     try{
       const csrf = await API.get("auth/getcsrf/");
+      console.log("The sign up csrf", csrf.data.csrftoken)
       API.defaults.headers.common["X-CSRFToken"] = `${csrf.data.csrftoken}`;
+      console.log("signup data", data)
       const resp = await API.post("api/users/", data);
       if (resp.status === 201)
       {

@@ -19,6 +19,8 @@ from users.models import Employee
 from .models import Job, Question, ExamResult, ExamCandidates
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.authentication import SessionAuthentication
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 class UserGetByUserNameAPIVIew(generics.RetrieveAPIView):
@@ -331,19 +333,17 @@ class UpdateCandidateExamTaken(generics.GenericAPIView):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
-
-
 class ExcelUploadView(generics.GenericAPIView):
+    """Bulk Question create class"""
     permission_classes = [IsAdminUser]
     authentication_classes = [SessionAuthentication]
     queryset = Question.objects.all()
 
     def post(self, request, *args, **kwargs):
-        # print('files', request.FILES.get('file'))
+        """Save Bulk Question"""
         csv_file = request.FILES.get('file')
         decoded_file = csv_file.read().decode('utf-8').splitlines()
         reader = csv.DictReader(decoded_file)
-
         objs = [
             Question(
                 text=row['text'],
@@ -356,6 +356,5 @@ class ExcelUploadView(generics.GenericAPIView):
             )
             for row in reader
         ]
-        print(objs)
-        # Question.objects.bulk_create(objs)
+        Question.objects.bulk_create(objs)
         return Response(status=200)

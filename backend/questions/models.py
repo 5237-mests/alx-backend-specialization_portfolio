@@ -19,7 +19,9 @@ class Job(models.Model):
 
 class Question(models.Model):
     """Question table"""
+
     text = models.TextField(max_length=1000, null=False, blank=False)
+    # to handle uniqueness later
     cha = models.CharField(max_length=255, null=False, blank=False)
     chb = models.CharField(max_length=255, null=False, blank=False)
     chc = models.CharField(max_length=255, null=False, blank=False)
@@ -29,9 +31,6 @@ class Question(models.Model):
                             on_delete=models.CASCADE,
                             related_name="questions",
                             related_query_name="job")
-    class Meta:
-        """Specify multiple field combination as primary key"""
-        unique_together = (('text', 'job'),)
 
     def __str__(self) -> str:
         """str representaion"""

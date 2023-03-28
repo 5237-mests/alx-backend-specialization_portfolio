@@ -3,10 +3,8 @@ import { StatesContext } from './StatesContext'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-
 function AvailableExams() {
-        const {exams, setJob, setUserid, setEligble, setAllowedTime} = useContext(StatesContext)
-        console.log("exams", exams)
+        const {exams, setJob, setUserid, setEligble, setAllowedTime } = useContext(StatesContext)
         const nav =  useNavigate()
 
         const startExam = (exam)=>{
@@ -20,7 +18,14 @@ function AvailableExams() {
                 localStorage.setItem("eligble", true)
             nav("/exam")
         }
-
+        // if (!logged )
+        // {
+        //   return <Login/>
+        // }
+        // if (!eligble)
+        // {
+        //   return <Home/>
+        // }
   return (
     <div className='container view-result'>
     <h1>Available Exams</h1>

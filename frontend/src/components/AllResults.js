@@ -67,13 +67,15 @@ else if (userid && !isAdmin)
         {jobs && <Select options={jobs} onChange={(e)=>getDetail(e)}/>}
         </div>
        </div>
-       <table className='table'>
+       <table className='table mt-5'>
         <thead>
-          <th>Employee Id</th>
+         <tr>
+         <th>Employee Id</th>
           <th>First Name</th>
           <th> Last Name</th>
           <th> Job Code</th>
           <th> Score</th>
+         </tr>
         </thead>
          {results && results.map(result => (
         <tr key={result.id}>

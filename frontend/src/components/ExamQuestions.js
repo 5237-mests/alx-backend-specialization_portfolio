@@ -6,9 +6,11 @@ import NavigatorButton from './NavigatorButton'
 import { StatesContext } from './StatesContext';
 import CountdownTimer from './RemainingTime';
 import API from './API';
+import Home from './Home'
+import Login from './Login';
 
 function ExamQuestions() {
-  const [loginSuccesss, setLoginSuccesss] = useState(true);
+  const [loginSuccesss] = useState(true);
   let navigate = useNavigate()
 
   let {
@@ -58,13 +60,20 @@ function ExamQuestions() {
     setCurrentPage(currentPage = currentPage < posts.length - 1? currentPage + postsPerPage : posts.length - 1)
   }
 
-  if (logged) {
-    setTimeout(()=>{
-      setLoginSuccesss(false);
-    }, 72000)
-  }
+  // if (logged) {
+  //   setTimeout(()=>{
+  //     setLoginSuccesss(false);
+  //   }, 72000)
+  // }
 
-
+if (!logged )
+{
+  return <Login/>
+}
+if (!eligble)
+{
+  return <Home/>
+}
   return (
     <div className='container-fluid '>
       {

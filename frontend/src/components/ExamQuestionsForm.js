@@ -36,7 +36,7 @@ const ExamQuestions = ({currentPosts}) => {
       setExres({"finished":true, "result": resp.data.score, "total": resp.data.total})
       submitRef.current = true
       // update candidate as exam is taken
-      const update_exam= await API.post(`api/exam-cand-update/${userid}/${job}/`)
+      await API.post(`api/exam-cand-update/${userid}/${job}/`)
       nav("/exam-result")
     } catch(err){
       submitRef.current = true;

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -10,6 +10,7 @@ import API from './API';
 function NavBar() {
   const {logged,isAdmin,setIsAdmin, isAuthenticated, setLogged, setStarted,setEligble, setIsloading, setIsAuthenticated, setExams, userid} = useContext(StatesContext)
   let navigate = useNavigate();
+  const [alerted, setAlerted] = useState(false)
   const logout = async ()=>{
     await API.get("auth/logout/")
     setIsAuthenticated(false)
@@ -38,6 +39,8 @@ function NavBar() {
    }
    catch (e) {
     setExams(false)
+    setAlerted(true)
+    setTimeout(()=>setAlerted(false), 2000)
    } 
   }
   const getProfile =() => {
@@ -45,6 +48,7 @@ function NavBar() {
   }
 
   return (
+    <>
     <Navbar bg="primary" expand="lg" variant='dark'>
       <Container>
         <Navbar.Brand href="#home">EEP Exam</Navbar.Brand>
@@ -86,7 +90,7 @@ function NavBar() {
           </Nav>
           <Nav>
             {logged ? <>
-              <Button onClick={getProfile}>{userid}</Button>
+              <Button onClick={getProfile}>Profile</Button>
               <Nav.Link> <Button  onClick={logout}>Logout</Button> </Nav.Link>
             </> : 
                   <Link className='text-light text-decoration-none' to="/login">Login</Link>
@@ -95,6 +99,13 @@ function NavBar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    {alerted &&
+    <div className='container mt-5 text-center text-danger'>
+    <h3 >You Have No Available Exam!!!</h3>
+    </div>
+    }
+    
+    </>
   );
 }
 

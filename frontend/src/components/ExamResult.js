@@ -37,9 +37,10 @@ function ExamResult() {
       )
    }
   return (
-    <div className='container-fluid bcg'>
-      <table className='table'>
-        <thead>
+    <div className='container-fluid bcg '>
+      <div className='pt-5'>
+      <table className='table text-dark '>
+        <thead className='bg-secondary '>
           <th>Employee Id</th>
           <th>First Name</th>
           <th> Last Name</th>
@@ -57,6 +58,7 @@ function ExamResult() {
         ))}
       </table>
       {pass && <h2>You well done! Have a good day!</h2>}
+      </div>
     </div>
   )
 }

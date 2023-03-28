@@ -68,7 +68,7 @@ else if (userid && !isAdmin)
         </div>
        </div>
        <table className='table mt-5'>
-        <thead>
+        <thead className='bg-secondary'>
          <tr>
          <th>Employee Id</th>
           <th>First Name</th>

@@ -5,6 +5,8 @@ import { StatesContext } from './StatesContext'
 function Profile() {
   const {userid} = useContext(StatesContext)
   const [user ,setUser] = useState({})
+  const [complete, setComplete] = useState(false)
+    const [load, setLoad] = useState(false)
   const [data, setData] = useState(
     {"username": user.username || "",
   "email": user.email || "", 
@@ -14,9 +16,16 @@ function Profile() {
   "middlename": user.middlename || "",
     })
   const getMe = async () => {
+    setLoad(true)
+                setComplete(false)
     const resp = await API.get(`auth/users/me/${userid}/`)
     setUser(resp.data)
     setData(resp.data)
+    setTimeout(()=> {
+      setComplete(true)
+      setTimeout(()=> setComplete(false), 2000)
+      setLoad(false)
+   }, 1000)
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +36,17 @@ function Profile() {
         data[key] = user[key]
       }
     }
+    setLoad(true)
+                setComplete(false)
     const csrf = await API.get("auth/getcsrf/") //free to get csrf
     API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`; 
     const update = await API.put(`auth/users/me/${data.username}/`, data)
     console.log(update.data)
+    setTimeout(()=> {
+      setComplete(true)
+      setTimeout(()=> setComplete(false), 4000)
+      setLoad(false)
+   }, 2000)
 
   }
 const onChange = (e) => {
@@ -77,7 +93,9 @@ const onChange = (e) => {
             <input type="text" readOnly class="form-control" name="curposition" onChange={(e)=> onChange(e)} value={data.curposition}/>
           </div>
       </div>
-      <div class="col-auto">
+      <div class="col-auto mt-4">
+      {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
+            {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
           <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </div>
   </form>

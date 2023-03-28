@@ -41,4 +41,6 @@ urlpatterns = [
     path("api/exam-cand-update/<int:username>/<int:jobid>/",
          views.UpdateCandidateExamTaken.as_view()),
     # get update status of exam cand
+    path("api/add-questions/", views.ExcelUploadView.as_view()),
+
 ]

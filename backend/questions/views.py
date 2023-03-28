@@ -2,6 +2,7 @@ from rest_framework import generics
 from users.models import Employee
 from datetime import datetime
 import random
+import csv
 import json
 from .serializer import (
     ExamResultSerializer,
@@ -12,12 +13,12 @@ from .serializer import (
     QuesionSerializer,
     )
 from rest_framework.response import Response
+from django.http import HttpResponse
 from rest_framework import status
 from users.models import Employee
 from .models import Job, Question, ExamResult, ExamCandidates
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.authentication import SessionAuthentication
-from django.utils.decorators import method_decorator
 
 
 class UserGetByUserNameAPIVIew(generics.RetrieveAPIView):
@@ -328,3 +329,33 @@ class UpdateCandidateExamTaken(generics.GenericAPIView):
         cand.save()
         serializer = ExamCandidateSerializer(cand)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
+
+
+class ExcelUploadView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser]
+    authentication_classes = [SessionAuthentication]
+    queryset = Question.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        # print('files', request.FILES.get('file'))
+        csv_file = request.FILES.get('file')
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+
+        objs = [
+            Question(
+                text=row['text'],
+                cha=row['cha'],
+                chb=row['chb'],
+                chc=row['chc'],
+                chd=row['chd'],
+                ans=row['ans'],
+                job=Job.objects.filter(jobCode=row['job']).first(),
+            )
+            for row in reader
+        ]
+        print(objs)
+        # Question.objects.bulk_create(objs)
+        return Response(status=200)

@@ -63,13 +63,17 @@ function NavBar() {
           <Nav>
           {isAdmin && userid && 
                  <>
-                 <Link className='btn text-light text-decoration-none' to="/result-all">
-                   Results
-                   </Link>
+                  <Link className='btn text-light text-decoration-none' to="/result-all">
+                    Results
+                  </Link>
                      
-                      <Link className='btn text-light text-decoration-none' to="/bulk-insert">
-                      Candidates
-                    </Link>
+                  <Link className='btn text-light text-decoration-none' to="/bulk-insert">
+                    Candidates
+                  </Link>
+
+                  <Link className='btn text-light text-decoration-none' to="/bulk-insert-questions">
+                    Add Questions
+                  </Link>
                  </>
                }
           </Nav>

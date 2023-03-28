@@ -19,7 +19,6 @@ function BulkInsert() {
         let jbs = []
         for (let j of resp.data)
         {
-           
             jbs.push({"value": j.id, "label":j.jobCode})
         }
     setAllJobs(jbs)
@@ -34,14 +33,14 @@ function BulkInsert() {
                              "day": data.day,
                               "hour": data.hour,
                               "minute": data.minute
-                                }
+                            }
             try {
                 setLoad(true)
                 setComplete(false)
                 const csrf = API.get("auth/getcsrf/")
                 API.defaults.headers["X-CSRFToken"] = `${(await csrf).data.csrftoken}`
                 const resp = await API.post("api/exam-cand/bulk/", payload)
-                console.log(resp.data)
+                console.log('api resp',resp.data)
                  
                  setTimeout(()=> {
                     setComplete(true)

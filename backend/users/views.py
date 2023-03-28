@@ -27,7 +27,7 @@ def LoginAPIView(request):
     if username and password:
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
+            login(request, user)  # generate session_id
             return JsonResponse(
                 {"status": "logged in"}, status=status.HTTP_200_OK)
     return JsonResponse(

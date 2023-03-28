@@ -7,7 +7,6 @@ from . import views
 
 app_name = "questions"
 
-
 urlpatterns = [
     # User CRUD
     path("api/users/", views.UserListCreateView.as_view()),

@@ -12,7 +12,6 @@ function AllResults() {
     const {userid, isAdmin} = useContext(StatesContext);
     const [results, setResults] = useState([])
     const [jobs, setJobs] = useState([])
-
     const updateData = async ()=>{
           try {
             const resp2 = await API.get("api/jobs/")

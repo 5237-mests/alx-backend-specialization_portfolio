@@ -16,16 +16,11 @@ function Profile() {
   "middlename": user.middlename || "",
     })
   const getMe = async () => {
-    setLoad(true)
-                setComplete(false)
+    
     const resp = await API.get(`auth/users/me/${userid}/`)
     setUser(resp.data)
     setData(resp.data)
-    setTimeout(()=> {
-      setComplete(true)
-      setTimeout(()=> setComplete(false), 2000)
-      setLoad(false)
-   }, 1000)
+    
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,9 +39,9 @@ function Profile() {
     console.log(update.data)
     setTimeout(()=> {
       setComplete(true)
-      setTimeout(()=> setComplete(false), 4000)
+      setTimeout(()=> setComplete(false), 1000)
       setLoad(false)
-   }, 2000)
+   }, 1000)
 
   }
 const onChange = (e) => {

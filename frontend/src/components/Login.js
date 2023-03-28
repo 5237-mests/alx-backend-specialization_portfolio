@@ -32,14 +32,15 @@ function Login() {
 
   // function which checks user is eligble for exam?
   const sendData = async ()=>{   
-    const csrf = await API.get("auth/getcsrf/") //free to get csrf
+    const csrf = await API.get("auth/getcsrf/")  
+     //free to get csrf
     API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`; // for all post req
     const logResp = await API.post("auth/login", data) //try to login user
     if (logResp.status === 200)
     {
       setIsAuthenticated(true)
       localStorage.setItem("isAuthenticated", true); 
-      const resp = await API.get(`api/users/${data.username}/`)
+      const resp = await API.get(`api/users/${data.username}/`)  // get who is logged in isAdmin is_staff
       setLogged(true)
       setUserid(data.username)
       const superuser = resp.data.is_superuser

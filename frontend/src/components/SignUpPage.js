@@ -34,7 +34,8 @@ function SignUpPage() {
       if (resp.status === 201)
       {
         setErr(false);
-        navigate("/login");
+        navigate("/activate");
+         
       } 
     }
     catch(e)

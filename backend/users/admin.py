@@ -4,9 +4,12 @@ from .models import Employee
 
 
 # Register your models to be controlled with django admin panel
-# class MyUserAdmin(admin.ModelAdmin):
-#     class Meta:
-#         fields = "__all__"
+
+class CustomUserAdmin(UserAdmin):
+    model = Employee
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('username', 'email', 'password', "first_name")})
+    )
 
 
-admin.site.register(Employee)
+admin.site.register(Employee, UserAdmin)

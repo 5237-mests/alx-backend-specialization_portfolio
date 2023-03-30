@@ -10,6 +10,10 @@ from rest_framework.authentication import SessionAuthentication
 from users.models import Employee
 from questions.serializer import EmployeeSerializer
 from rest_framework.response import Response
+from .models import ActivationTokenGenerator
+from django.shortcuts import render
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from .utils import SendPasswordResetEmail
 
 
 def get_csrftoken(request):
@@ -75,3 +79,56 @@ class UserDetalView(generics.RetrieveUpdateAPIView):
         instance.save()
         serialzer = EmployeeSerializer(instance)
         return Response(serialzer.data, status=status.HTTP_200_OK)
+
+
+class ActivateUserAPIView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        uid = kwargs.get("username")
+        tk = kwargs.get("token")
+        token_obj = ActivationTokenGenerator.objects.filter(token=tk).first()
+        if token_obj:
+            user = Employee.objects.filter(username=uid).first()
+            user.is_active = True
+            user.save()
+            return render(request, "activate.html", {"status": "success"})
+        return render(request, "activate.html", {"status": "error"})
+
+
+class PasswordRestRequestAPIView(generics.GenericAPIView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        user = Employee.objects.filter(username=username).first()
+        if not user:
+            return Response(
+                {"status": "Password Reset Link Sent to your Email!"},
+                status=status.HTTP_200_OK)
+        token = PasswordResetTokenGenerator().make_token(user=user)
+        # this token hash some values that may change ! las Token expire !
+        data = {"token": token,
+                "user_id": user.username,
+                "firstname": user.first_name,
+                "email": user.email}
+        SendPasswordResetEmail(data)
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
+
+
+class PasswordResetDoneAPIView(generics.GenericAPIView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        token = request.data.get("code")
+        user = Employee.objects.filter(username=username).first()
+        if not user:
+            return Response(
+                {"status": "User Not found"},
+                status=status.HTTP_200_OK)
+        stat = PasswordResetTokenGenerator().check_token(
+            user=user, token=token)
+        if stat:
+            user.set_password(password)  # save hashed data
+            user.save()
+            return Response(
+                {"status": "Password changed successfully!"},
+                status=status.HTTP_200_OK)
+        return Response({"status": "Token invalid!"},
+                        status=status.HTTP_200_OK)

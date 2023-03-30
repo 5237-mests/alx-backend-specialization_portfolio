@@ -15,6 +15,9 @@ import AvailableExams from './components/AvailableExams';
 import Profile from './components/Profile';
 import BulkInsert from './components/BulkInsert';
 import BulkInsertQuestions from './components/BulkInsertQuestions'
+import ActivationStatus from './components/ActivationStatus';
+import ResetPasword from './components/ResetPasword';
+import ResetPaswordConfirm from './components/ResetPaswordConfirm';
 function App() {
   return (
      <StatesProvider>
@@ -32,6 +35,9 @@ function App() {
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/bulk-insert' element={<BulkInsert/>}/>
             <Route path='/bulk-insert-questions' element={<BulkInsertQuestions/>}/>
+            <Route path='/activate' element={<ActivationStatus/>}/>
+            <Route path='/reset-password' element={<ResetPasword/>}/>
+            <Route path='/reset-confirm' element={<ResetPaswordConfirm/>}/>
           </Routes>
           <Footer/>
       </Router>

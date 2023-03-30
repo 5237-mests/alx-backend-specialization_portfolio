@@ -18,13 +18,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
                   'curposition', 'email', 'password')
         extra_kwargs = {"password": {"write_only": True}}
 
-    def create(self, **validated_data):
-        """overide create method"""
-        password = validated_data.pop("password")
-        user = super().create(**validated_data)
-        user.set_password(password)
-        user.save()
-        return user
+    # def create(self, **validated_data):
+    #     """overide create method"""
+    #     password = validated_data.get("password")
+    #     user = super().create(**validated_data)
+    #     user.set_password(password)
+    #     user.save()
+    #     return user
 
     def update(self, instance, validated_data):
         """overrider update method"""

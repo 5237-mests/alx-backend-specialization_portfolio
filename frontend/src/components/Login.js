@@ -7,8 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import '../CSS/Login.css';
 import favicon from '../assets/images/favicon-16x16.png'
-
-import API from './API';
+import API from './API'
 
 function Login() {
   const {setLogged, setUserid, setIsAuthenticated, setIsAdmin} = useContext(StatesContext)
@@ -32,10 +31,10 @@ function Login() {
 
   // function which checks user is eligble for exam?
   const sendData = async ()=>{   
-    const csrf = await API.get("auth/getcsrf/")  
+    const csrf = await API.get(`auth/getcsrf/`)  
      //free to get csrf
     API.defaults.headers["X-CSRFToken"] = `${csrf.data.csrftoken}`; // for all post req
-    const logResp = await API.post("auth/login", data) //try to login user
+    const logResp = await API.post(`auth/login`, data) //try to login user
     if (logResp.status === 200)
     {
       setIsAuthenticated(true)
@@ -101,6 +100,7 @@ function Login() {
                     </div>
                     
                     <p className='text-light'> Don't have an account? <Link to='/register'>SignUp</Link></p>
+                    <p className='text-light'> Forget password? <Link to='/reset-password'>reset password</Link></p>
                 </div>
 
             </Form>

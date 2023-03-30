@@ -21,6 +21,9 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.authentication import SessionAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from users.models import ActivationTokenGenerator
+from users.serializers import ActivationTokenSerializer
+from users.utils import SendActivationEmail
 
 
 class UserGetByUserNameAPIVIew(generics.RetrieveAPIView):
@@ -66,6 +69,11 @@ class UserListCreateView(generics.ListCreateAPIView):
             user = Employee.objects.create(**request.data)
             user.set_password(password)
             user.save()
+            token = ActivationTokenGenerator.objects.create(user=user).token
+            SendActivationEmail({"token": str(token),
+                                 "email": user.email,
+                                 "user_id": user.username,
+                                 "firstname": user.first_name})
             user_ser = EmployeeSerializer(user)
             return Response(user_ser.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

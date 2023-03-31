@@ -15,7 +15,7 @@ urlpatterns = [
     path("getcsrf/", get_csrftoken),  # Get CSRFTOKEN
     path("login", LoginAPIView),  # Authenticate login and send sessionid
     path("logout/", logoutAPIView),  # logout session
-    path("users/me/<int:username>/", UserDetalView.as_view()),
+    path("users/me/<str:username>/", UserDetalView.as_view()),
     path("activate/<username>/<token>/", ActivateUserAPIView.as_view()),
     path("reset-password/", PasswordRestRequestAPIView.as_view()),
     path("reset-password-done/", PasswordResetDoneAPIView.as_view()),

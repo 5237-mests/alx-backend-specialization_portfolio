@@ -10,7 +10,7 @@ app_name = "questions"
 urlpatterns = [
     # User CRUD
     path("api/users/", views.UserListCreateView.as_view()),
-    path("api/users/<int:username>/",
+    path("api/users/<str:username>/",
          views.UserGetByUserNameAPIVIew.as_view()),
     # Job CRUD
     path("api/jobs/", views.JobListCreateAPIView.as_view()),
@@ -26,18 +26,18 @@ urlpatterns = [
          views.ExamResultListCreateView.as_view()),
     path("api/exam-result-per-job/<int:pk>",
          views.ExamResultsPerJobAdminView.as_view()),
-    path("api/exam-result/<int:username>/",
+    path("api/exam-result/<str:username>/",
          views.ExamResultsForUserAPIView.as_view()),
-    path("api/exam-result/<int:username>/<int:jobid>/",
+    path("api/exam-result/<str:username>/<int:jobid>/",
          views.ExamResultSingleAPIView.as_view()),
     # Exam Candidates
     path("api/exam-cand/",  # Get All Candidates or add to candidates
          views.ExamCandiateListCreateView.as_view()),
     path("api/exam-cand/bulk/",  # Add many candidates at once
          views.ExamCandidateBulkInsertView.as_view()),
-    path("api/exam-cand/<int:username>/",  # Get all Exams A user reg for
+    path("api/exam-cand/<str:username>/",  # Get all Exams A user reg for
          views.ExamAvailableListView.as_view()),
-    path("api/exam-cand-update/<int:username>/<int:jobid>/",
+    path("api/exam-cand-update/<str:username>/<int:jobid>/",
          views.UpdateCandidateExamTaken.as_view()),
     # get update status of exam cand
     path("api/add-questions/", views.ExcelUploadView.as_view()),

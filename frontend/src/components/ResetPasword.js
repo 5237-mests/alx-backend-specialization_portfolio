@@ -40,20 +40,20 @@ function ResetPasword() {
        }
   }
   return (
-    <div>
-         <Form className='container view-result mt-5' onSubmit={handleSubmit(sendData)}>
-            <div className='container '>
+    <div className='container bg-light'>
+         <Form className='view-result m-5 p-5' onSubmit={handleSubmit(sendData)}>
+            <div className='container'>
               <div className='row'>
                   <div className='col-sm col'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>UserName: <Form.Control  type="number" {...register('username', { required: true })} className='mt-2' onChange={updateData}/>
+                      <Form.Label>UserName: <Form.Control  type="text" {...register('username', { required: true })} className='mt-2' onChange={updateData}/>
                         {errors.username && 
                           <p className='text-danger'>username is required.</p>}
                       </Form.Label>  
                     </Form.Group>
                   </div>
-                </div>
-              <div className='row pb-3'>
+              </div>
+              <div className='row py-3'>
               {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
                 {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
                 <Button className='col-sm-3 col-md-2 col-lg-1 ms-3' variant="primary" type="submit">

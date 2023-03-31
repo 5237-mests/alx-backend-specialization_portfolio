@@ -62,7 +62,7 @@ function NavBar() {
                 </Button>
                
               : <></>
-             }
+           }
           </Nav>
           <Nav>
           {isAdmin && userid && 
@@ -90,7 +90,7 @@ function NavBar() {
           </Nav>
           <Nav>
             {logged ? <>
-              <Button onClick={getProfile}>Profile</Button>
+              <Button onClick={getProfile}>Profile {userid}</Button>
               <Nav.Link> <Button  onClick={logout}>Logout</Button> </Nav.Link>
             </> : 
                   <Link className='text-light text-decoration-none' to="/login">Login</Link>

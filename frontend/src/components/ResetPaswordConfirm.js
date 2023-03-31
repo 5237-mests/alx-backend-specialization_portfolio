@@ -37,53 +37,53 @@ function ResetPaswordConfirm() {
        }
   }
   return (
-    <div>
-
-     
-         <Form className='forme' onSubmit={handleSubmit(sendData)}>
-            <div className='container'>
-            <div className='row'>
+    <div className='container my-3 log'>     
+      <Form className='bg-light m-5 p-5' onSubmit={handleSubmit(sendData)}>
+        <div className=''>
+          <div>
             <div className='col-sm col'>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>UserName: <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
-                        {errors.username && 
-                          <p className='text-danger'>username is required.</p>}
-                      </Form.Label>  
-                    </Form.Group>
-                  </div>
-                  </div>
-                <div className='row'>
-                  <div className='col-sm col'>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>New password: <Form.Control  type="password" {...register('password', { required: true })} onChange={updateData}/>
-                        {errors.username && 
-                          <p className='text-danger'>password required</p>}
-                      </Form.Label>  
-                    </Form.Group>
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='col-sm col'>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Your Code: <Form.Control  type="text" {...register('code', { required: true })} onChange={updateData}/>
-                        {errors.username && 
-                          <p className='text-danger'>reset Code Required</p>}
-                      </Form.Label>  
-                    </Form.Group>
-                  </div>
-                </div>
-              <div className='row pb-3'>
-              {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
-                {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </div>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>UserName: <Form.Control  type="text" {...register('username', { required:    true })} onChange={updateData}/>
+                  {errors.username && 
+                    <p className='text-danger'>username is required.</p>}
+                </Form.Label>  
+              </Form.Group>
             </div>
-          </Form>
+          </div>
+
+          <div>
+            <div className='col-sm col'>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>New password: <Form.Control  type="password" {...register('password', { required: true })} onChange={updateData}/>
+                  {errors.username && 
+                    <p className='text-danger'>password required</p>}
+                </Form.Label>  
+              </Form.Group>
+            </div>
+          </div>
+
+          <div>
+            <div className='col-sm col'>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Your Code: <Form.Control  type="text" {...register('code', { required: true })} onChange={updateData}/>
+                  {errors.username && 
+                    <p className='text-danger'>reset Code Required</p>}
+                </Form.Label>  
+              </Form.Group>
+            </div>
+          </div>
+        
+          <div className='pb-3'>
+            {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
+              {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
+        </div>
+      </Form>
     </div>
   )
 }
 
-export default ResetPaswordConfirm
+export default ResetPaswordConfirm;

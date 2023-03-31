@@ -6,7 +6,7 @@ function Profile() {
   const {userid} = useContext(StatesContext)
   const [user ,setUser] = useState({})
   const [complete, setComplete] = useState(false)
-    const [load, setLoad] = useState(false)
+  const [load, setLoad] = useState(false)
   const [data, setData] = useState(
     {"username": user.username || "",
   "email": user.email || "", 
@@ -52,46 +52,46 @@ const onChange = (e) => {
       <Button className='mt-3 mb-3' onClick={getMe}>Get My Detail</Button>
       <form onSubmit={(e)=>handleSubmit(e)}>
         
-      <div class="form-group row">
-        <label for="username" class="col-sm-2 col-form-label">Username</label>
-          <div class="col-sm-10">
-            <input type="text" readOnly class="form-control" name="username" onChange={(e)=> onChange(e)} value={data.username}/>
+      <div className="form-group row">
+        <label for="username" className="col-sm-2 col-form-label">Username</label>
+          <div className="col-sm-10">
+            <input type="text" readOnly className="form-control" name="username" onChange={(e)=> onChange(e)} value={data.username}/>
           </div>
       </div>
-      <div class="form-group row">
-        <label for="email" class="col-sm-2 col-form-label">Email: </label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" name="email" onChange={(e)=> onChange(e)} value={data.email}/>
+      <div className="form-group row">
+        <label for="email" className="col-sm-2 col-form-label">Email: </label>
+          <div className="col-sm-10">
+            <input type="email" className="form-control" name="email" onChange={(e)=> onChange(e)} value={data.email}/>
           </div>
       </div>
-      <div class="form-group row">
-        <label for="first_name" class="col-sm-2 col-form-label">FirstName: </label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" name="first_name" onChange={(e)=> onChange(e)} value={data.first_name}/>
+      <div className="form-group row">
+        <label for="first_name" className="col-sm-2 col-form-label">FirstName: </label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="first_name" onChange={(e)=> onChange(e)} value={data.first_name}/>
           </div>
       </div>
-      <div class="form-group row">
-        <label for="middlename" class="col-sm-2 col-form-label">MiddleName: </label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" name="middlename" onChange={(e)=> onChange(e)} value={data.middlename}/>
+      <div className="form-group row">
+        <label for="middlename" className="col-sm-2 col-form-label">MiddleName: </label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="middlename" onChange={(e)=> onChange(e)} value={data.middlename}/>
           </div>
       </div>
-      <div class="form-group row">
-        <label for="last_name" class="col-sm-2 col-form-label">LastName: </label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" name="last_name" onChange={(e)=> onChange(e)}  value={data.last_name}/>
+      <div className="form-group row">
+        <label for="last_name" className="col-sm-2 col-form-label">LastName: </label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="last_name" onChange={(e)=> onChange(e)}  value={data.last_name}/>
           </div>
       </div>
-      <div class="form-group row">
-        <label for="curposition" class="col-sm-2 col-form-label">Current Position: </label>
-          <div class="col-sm-10">
-            <input type="text" readOnly class="form-control" name="curposition" onChange={(e)=> onChange(e)} value={data.curposition}/>
+      <div className="form-group row">
+        <label for="curposition" className="col-sm-2 col-form-label">Current Position: </label>
+          <div className="col-sm-10">
+            <input type="text" readOnly className="form-control" name="curposition" onChange={(e)=> onChange(e)} value={data.curposition}/>
           </div>
       </div>
-      <div class="col-auto mt-4">
+      <div className="col-auto mt-4">
       {complete && <p className='text-success  font-weight-bold bg-light text-center'>Process Complted! </p>}
             {load && <p className='text-danger font-weight-bold bg-light text-center'>Processing .... </p>}
-          <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          <button type="submit" className="btn btn-primary mb-2">Submit</button>
       </div>
   </form>
     </div>

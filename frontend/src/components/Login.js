@@ -80,7 +80,7 @@ function Login() {
                     <div className='row'>
                       <Form.Group className="mb-3 " controlId="formBasicEmail">
                         <Form.Label className='row'>UserName: 
-                          <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
+                          <Form.Control  type="text" {...register('username', { required: true })} onChange={updateData}/>
                         </Form.Label>  
                       </Form.Group>
                     </div>

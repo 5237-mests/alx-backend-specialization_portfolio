@@ -59,7 +59,7 @@ function SignUpPage() {
               <div className='row'>
                   <div className='col-sm col'>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>UserName: <Form.Control  type="number" {...register('username', { required: true })} onChange={updateData}/>
+                      <Form.Label>UserName: <Form.Control  type="text" {...register('username', { required: true })} onChange={updateData}/>
                         {errors.username && 
                           <p className='text-danger'>username is required.</p>}
                       </Form.Label>  

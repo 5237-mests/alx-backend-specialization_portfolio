@@ -6,6 +6,7 @@ from uuid import uuid4
 
 
 class CustomuserManger(UserManager):
+    """Custom create and update"""
     def create_user(self, username, email, password, first_name, **kwargs):
         email = self.normalize_email(email)
         user = self.model(email=email,
@@ -29,8 +30,8 @@ class CustomuserManger(UserManager):
 
 class Employee(AbstractUser):
     """Custom Auth Users (Employee models)"""
-    username = models.IntegerField(
-        _("Username"), null=False, unique=True, blank=False)
+    username = models.CharField(
+        _("Username"), max_length=255, null=False, unique=True, blank=False)
     first_name = models.CharField(max_length=255, null=False, blank=False)
     middlename = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
@@ -51,6 +52,7 @@ class Employee(AbstractUser):
 
 
 class ActivationTokenGenerator(models.Model):
+    """Generate activation token"""
     token = models.UUIDField(unique=True,
                              primary_key=True,
                              null=False, default=uuid4)

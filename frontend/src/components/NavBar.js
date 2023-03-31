@@ -90,7 +90,7 @@ function NavBar() {
           </Nav>
           <Nav>
             {logged ? <>
-              <Button onClick={getProfile}>Profile {userid}</Button>
+              <Button onClick={getProfile}><i class="bi bi-person-circle"></i></Button>
               <Nav.Link> <Button  onClick={logout}>Logout</Button> </Nav.Link>
             </> : 
                   <Link className='text-light text-decoration-none' to="/login">Login</Link>

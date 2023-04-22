@@ -1,8 +1,8 @@
 # WebStack Portfolio Project at ALX.
 
 ## Authors:
-1.Mesfin Mulugeta
-1.Getacher Mitike
+1. Mesfin Mulugeta
+1. Getacher Mitike
 ## Online Exam Website
 
 ### Technolgy Used.
